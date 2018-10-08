@@ -4,8 +4,8 @@ import logging
 
 # load data
 def get_mnist_iter(args):
-    train_image = args.data_url + 'train-images-idx3-ubyte'
-    train_lable = args.data_url + 'train-labels-idx1-ubyte'
+    train_image = args.data_url + 'train-images.idx3-ubyte'
+    train_lable = args.data_url + 'train-labels.idx1-ubyte'
     train = mx.io.MNISTIter(image=train_image,
                             label=train_lable,
                             data_shape=(1, 28, 28),
