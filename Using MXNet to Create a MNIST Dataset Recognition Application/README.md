@@ -36,11 +36,15 @@
 
 **步骤 4**  &#160; &#160; 在“训练作业”界面，单击左上角的“创建”，参考图1填写训练作业参数。
 
+
 图1 训练作业参数配置
 
 <img src="images/分布式作业参数1.PNG" width="800px" />
 <img src="images/分布式作业参数2.PNG" width="800px" />
 
+单计算节点：kv_store设置为‘local’或‘device’
+
+多计算节点：kv_store设置为‘dist_sync’或‘dist_sync_device’
 
 **步骤 5**  &#160; &#160;  参数确认无误后，单击“立即创建”，完成训练作业创建。
 
