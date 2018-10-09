@@ -1,7 +1,7 @@
 import mxnet as mx
 import argparse
 import logging
-
+import os
 # load data
 def get_mnist_iter(args):
     train_image = args.data_url + 'train-images.idx3-ubyte'
@@ -9,7 +9,7 @@ def get_mnist_iter(args):
     train = mx.io.MNISTIter(image=train_image,
                             label=train_lable,
                             data_shape=(1, 28, 28),
-                            batch_size=128,
+                            batch_size=args.batch_size,
                             shuffle=True,
                             flat=False,
                             silent=False,
@@ -68,6 +68,21 @@ def fit(args):
               epoch_end_callback=checkpoint,
               allow_missing=True)
 
+    if args.export_model == 1 and args.train_url is not None and len(args.train_url):
+        import moxing.mxnet as mox
+        end_epoch = args.num_epochs
+        save_path = args.train_url if kv.rank == 0 else "%s-%d" % (args.train_url, kv.rank)
+        params_path = '%s-%04d.params' % (save_path, end_epoch)
+        json_path = ('%s-symbol.json' % save_path)
+        logging.info(params_path + 'used to predict')
+        pred_params_path = os.path.join(args.train_url, 'model', 'pred_model-0000.params')
+        pred_json_path = os.path.join(args.train_url, 'model', 'pred_model-symbol.json')
+        mox.file.copy(params_path, pred_params_path)
+        mox.file.copy(json_path, pred_json_path)
+        for i in range(1, args.num_epochs + 1, 1):
+            mox.file.remove('%s-%04d.params' % (save_path, i))
+        mox.file.remove(json_path)
+
 if __name__ == '__main__':
     # parse args
     parser = argparse.ArgumentParser(description="train mnist",
@@ -80,11 +95,11 @@ if __name__ == '__main__':
     parser.add_argument('--data_url', type=str, default='s3://obs-lpf/data/', help='the training data')
     parser.add_argument('--lr', type=float, default=0.05,
                         help='initial learning rate')
-    parser.add_argument('--num_epochs', type=int, default=20,
+    parser.add_argument('--num_epochs', type=int, default=10,
                         help='max num of epochs')
     parser.add_argument('--disp_batches', type=int, default=20,
                         help='show progress for every n batches')
-    parser.add_argument('--batch_size', type=int, default=32,
+    parser.add_argument('--batch_size', type=int, default=128,
                         help='the batch size')
     parser.add_argument('--kv_store', type=str, default='device',
                         help='key-value store type')
@@ -92,6 +107,8 @@ if __name__ == '__main__':
                         help='the path model saved')
     parser.add_argument('--num_gpus', type=int, default='0',
                         help='number of gpus')
+    parser.add_argument('--export_model', type=int, default=1, help='1: export model for predict job \
+                                                                     0: not export model')
     args, unkown = parser.parse_known_args()
 
     fit(args)
