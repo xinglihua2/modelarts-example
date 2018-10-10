@@ -180,6 +180,7 @@
 
 图16 obs界面
 <img src="images/obs界面.png" width="800px" />
+
 图17 创建桶
 <img src="images/创建桶.png" width="800px" />
 
