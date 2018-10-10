@@ -16,23 +16,23 @@ NUM_SAMPLES_EVAL = 295
 NUM_SAMPLES_TEST = 8424 
 tf.flags.DEFINE_integer('batch_size', 16, 'Mini-batch size') 
 tf.flags.DEFINE_string('data_url', None, 'Dir of dataset')
-tf.flags.DEFINE_string('log_dir', None, 'Dir of log')
+tf.flags.DEFINE_string('train_url', None, 'Dir of log')
 tf.flags.DEFINE_boolean('is_training', True, 'True for train. False for eval and predict.') 
 flags = tf.flags.FLAGS 
 
 import atexit
 import logging
 _data_url = flags.data_url
-_log_dir = flags.log_dir
-if not mox.file.is_directory(_log_dir):
-  mox.file.make_dirs(_log_dir)
+_train_url = flags.train_url
+if not mox.file.is_directory(_train_url):
+  mox.file.make_dirs(_train_url)
 mox.file.make_dirs('/cache/data_url')
-mox.file.make_dirs('/cache/log_dir')
+mox.file.make_dirs('/cache/train_url')
 mox.file.copy_parallel(_data_url, '/cache/data_url')
-mox.file.copy_parallel(_log_dir, '/cache/log_dir')
+mox.file.copy_parallel(_train_url, '/cache/train_url')
 flags.data_url = '/cache/data_url'
-flags.log_dir = '/cache/log_dir'
-atexit.register(lambda: mox.file.copy_parallel('/cache/log_dir', _log_dir))
+flags.train_url = '/cache/train_url'
+atexit.register(lambda: mox.file.copy_parallel('/cache/train_url', _train_url))
 logger = logging.getLogger()
 while logger.handlers:
   logger.handlers.pop()
@@ -175,7 +175,7 @@ if __name__ == '__main__':
             optimizer_fn=mox.get_optimizer_fn(name='adam', learning_rate=0.001), 
             run_mode=mox.ModeKeys.TRAIN, 
             batch_size=flags.batch_size, 
-            log_dir=flags.log_dir, 
+            log_dir=flags.train_url, 
             max_number_of_steps=steps_per_epoch * 150, 
             log_every_n_steps=20, 
             save_summary_steps=50, 
@@ -187,7 +187,7 @@ if __name__ == '__main__':
             batch_size=5, 
             log_every_n_steps=1, 
             max_number_of_steps=int(NUM_SAMPLES_EVAL / 5), 
-            checkpoint_path=flags.log_dir) 
+            checkpoint_path=flags.train_url) 
     mox.run(input_fn=input_fn, 
             output_fn=output_fn, 
             model_fn=model_fn, 
@@ -196,9 +196,9 @@ if __name__ == '__main__':
             max_number_of_steps=int(NUM_SAMPLES_TEST / 24), 
             log_every_n_steps=50, 
             output_every_n_steps=int(NUM_SAMPLES_TEST / 24), 
-            checkpoint_path=flags.log_dir) 
+            checkpoint_path=flags.train_url) 
     # Write results to file. tf.gfile allow writing file to EBS/s3 
-    submission_file = os.path.join(flags.log_dir, 'submission.csv') 
+    submission_file = os.path.join(flags.train_url, 'submission.csv') 
     result = submission.to_csv(path_or_buf=None, index=False) 
     with tf.gfile.Open(submission_file, 'w') as f: 
       f.write(result)
