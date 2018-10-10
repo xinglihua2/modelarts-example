@@ -20,12 +20,12 @@ NUM_SAMPLES_TEST = 8424
 
 tf.flags.DEFINE_integer('batch_size', 16, 'Mini-batch size') 
 tf.flags.DEFINE_string('data_url', None, 'Dir of dataset')
-tf.flags.DEFINE_string('log_dir', None, 'Dir of log')
+tf.flags.DEFINE_string('train_url', None, 'Dir of log')
 tf.flags.DEFINE_boolean('is_training', True, 'True for train. False for eval and predict.') 
 
 flags = tf.flags.FLAGS 
 num_gpus = mox.get_flag('num_gpus') 
-# if using distributed, the number of workers is related to the number of machines.
+# # if using distributed, the number of workers is related to the number of machines.
 num_workers = len(mox.get_flag('worker_hosts').split(',')) 
 steps_per_epoch = int(math.ceil(float(NUM_SAMPLES_TRAIN) / (flags.batch_size * num_gpus * num_workers))) 
 submission = pd.DataFrame(columns=['id', 'is_iceberg']) 
@@ -183,7 +183,7 @@ if __name__ == '__main__':
             optimizer_fn=mox.get_optimizer_fn(name='adam', learning_rate=0.001), 
             run_mode=mox.ModeKeys.TRAIN, 
             batch_size=flags.batch_size, 
-            log_dir=flags.log_dir, 
+            log_dir=flags.train_url, 
             max_number_of_steps=steps_per_epoch * 150, 
             log_every_n_steps=20, 
             save_summary_steps=50, 
@@ -195,7 +195,7 @@ if __name__ == '__main__':
             batch_size=5, 
             log_every_n_steps=1, 
             max_number_of_steps=int(NUM_SAMPLES_EVAL / 5), 
-            checkpoint_path=flags.log_dir) 
+            checkpoint_path=flags.train_url) 
     mox.run(input_fn=input_fn, 
             output_fn=output_fn, 
             model_fn=model_fn, 
@@ -204,9 +204,9 @@ if __name__ == '__main__':
             max_number_of_steps=int(NUM_SAMPLES_TEST / 24), 
             log_every_n_steps=50, 
             output_every_n_steps=int(NUM_SAMPLES_TEST / 24), 
-            checkpoint_path=flags.log_dir) 
+            checkpoint_path=flags.train_url) 
     # Write results to file. tf.gfile allow writing file to EBS/s3 
-    submission_file = os.path.join(flags.log_dir, 'submission.csv') 
+    submission_file = os.path.join(flags.train_url, 'submission.csv') 
     result = submission.to_csv(path_or_buf=None, index=False) 
     with tf.gfile.Open(submission_file, 'w') as f: 
       f.write(result)
