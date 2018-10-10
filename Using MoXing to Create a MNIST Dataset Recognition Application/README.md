@@ -27,11 +27,15 @@
 ### 2. 训练模型
 接下来，要编写模型训练脚本代码（本案例中已编写好了训练脚本），并完成模型训练，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 下载模型训练脚本文件<a href ="codes/train_mnist.py">train\_mnist.py</a>。参考“上传业务数据”</a>章节内容，将脚本文件上传至华为云OBS桶 （假设OBS桶路径为：s3://obs-lpf/test/mnist/）。
+**步骤 1**  &#160; &#160; 下载模型训练脚本文件<a href ="codes/train_mnist.py">train\_mnist.py</a>。参考“上传业务数据”</a>章节内容，将脚本文件上传至华为云OBS桶 （假设OBS桶路径为：s3://obs-jn/code/）。
 
 **步骤 2**  &#160; &#160; 参考“访问ModelArts”</a>章节内容，登录“ModelArts”管理控制台。
 
-**步骤 3**  &#160; &#160; 在“训练作业”界面，单击左上角的“创建”.
+**步骤 3**  &#160; &#160; 在“训练作业”界面，单击左上角的“创建”, 参考图1填写训练作业参数.
+
+图1 训练作业参数配置（训练）
+
+<img src="images/训练作业参数配置.PNG" width="800px" />
 
 **步骤 4**  &#160; &#160;  参数确认无误后，单击“立即创建”，完成训练作业创建。
 
@@ -44,64 +48,26 @@
 
 模型训练完成后，可以创建预测作业，将模型部署为在线预测服务，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 在“模型管理”界面，单击左上角的“创建新版本”。其中，模型名称参数model_name，此处可随意指定。
+**步骤 1**  &#160; &#160; 在“模型管理”界面，单击左上角的“导入”，参考图2填写参数。其中，名称可随意填写 。推理代码参考codes/predict.py 。
+
+图2 导入模型参数配置
+
+<img src="images/导入模型参数配置.PNG" width="800px" />
 
 
-**步骤 2**  &#160; &#160; 参数确认无误后，单击“立即创建”，完成预测作业创建。
+**步骤 2**  &#160; &#160; 参数确认无误后，单击“立即创建”，完成模型创建。
 
+当模型状态为“正常”时，表示创建成功。单击部署-在线服务，创建预测服务，参考图3填写参数。
 
-当预测作业状态为“运行中”时，表示创建成功。单击预测作业名称。在发起预测请求时，你需要查看IP地址、端口号和模型名称3个参数值。
+图3 部署在线服务参数配置
+
+<img src="images/部署在线服务参数配置.PNG" width="800px" />
 
 ### 4. 发起预测请求
-说明：请保证客户端能够连接互联网。
 
-如果是windows用户，请先安装git bash，并配置好python, pip环境（推荐使用Anaconda）。linux用户在terminal中按照以下步骤运行（以下步骤仅针对python客户端，JAVA客户端请参考文档底部链接获取详细指导）。
+完成模型部署后，在部署上线-在线服务界面可以看到已上线的预测服务名称，点击进入可以进行在线预测,如图4。
 
-完成模型部署后，将进行预测服务的请求访问，操作步骤如下：
+图4 在线服务测试
 
-**步骤 1**    执行下面命令，下载客户端代码。
+<img src="images/在线服务测试.PNG" width="800px" />
 
-git clone https://github.com/huawei-clouds/dls-tfserving-client.git
-
-**步骤 2**    安装依赖及配置python环境变量。
-
-     1.安装 tensorflow
-
-        pip install tensorflow
-
-     2.安装其它依赖包
-
-        pip install image
-
-     3.把下列路径加入到环境变量 PYTHONPATH 中
-
-        export PYTHONPATH=PYTHONPATH:<i>xx</i>/dls-tfserving-client/python/predict_client
-
-注意: xx是指"dls-tfserving-client" 所在的目录。
-
-**步骤 3**  在xx/dls-tfserving-client/python/下新建python代码文件，命名为：predict_mnist.py，具体代码请访问https://github.com/huaweicloud/dls-example/blob/master/Using%20MoXing%20to%20Create%20a%20MNIST%20Dataset%20Recognition%20Application/codes/predict_mnist.py
-
-**步骤 4**  根据实际情况修改predict_mnist.py文件中的部分代码，如下所示。
-
-IMAGE_PATH = '/export1/zzy/mnist/3.png'    #根据实际待预测图片的保存地址修改参数
-
-HOST = '10.155.167.202'  #根据实际服务IP地址修改
-
-PORT = 31670             #根据实际服务端口号修改
-
-MODEL_NAME = 'mnist'     #根据实际服务运行参数model_name修改
-
-SIGNATURE_NAME = 'predict_object'
-
-MAX_RESPONSE_TIME = 3000
-
-**步骤 5**  运行代码
-
-python predict_mnist.py
-
-**注意：**
-
-
-**这里参数server\_url包含了服务的IP和端口号，file_path表示待预测图片的路径。**
-
-**关于发起预测请求的详细操作指导，请参考：https://github.com/huawei-clouds/dls-tfserving-client 。**
