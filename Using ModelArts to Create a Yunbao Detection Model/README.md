@@ -235,4 +235,4 @@
 <img src="images/共享模型--自动学习.PNG" width="800px" />
 
 
-
+<span style="color:red;">这是比font标签更好的方式。可以试试。</span>
