@@ -33,7 +33,7 @@ def main(*args):
     predictions = tf.argmax(y, 1)
     correct_predictions = tf.equal(predictions, tf.argmax(y_, 1))
     accuracy = tf.reduce_mean(tf.cast(correct_predictions, tf.float32))
-    export_spec = mox.ExportSpec(inputs_dict={'images': x}, outputs_dict={'predictions': predictions})
+    export_spec = mox.ExportSpec(inputs_dict={'images': x}, outputs_dict={'predictions': predictions}, version='model')
     return mox.ModelSpec(loss=cross_entropy, log_info={'loss': cross_entropy, 'accuracy': accuracy},
                          export_spec=export_spec)
 
