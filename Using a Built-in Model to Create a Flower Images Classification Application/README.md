@@ -45,7 +45,7 @@
 
     split_image_classification_dataset(
           split_spec={'train': 0.9, 'eval': 0.1},
-          src_dir='s3://automation/data/flower_photos',
+          src_dir='s3://obs-testdata/flower_photos',
           dst_dir='s3://obs-testdata/flowers_raw',
           overwrite=False)
 
