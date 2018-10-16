@@ -13,7 +13,7 @@
 
 **步骤 2**  &#160; &#160; 选择<a href = "https://www.kaggle.com/c/statoil-iceberg-classifier-challenge">“Statoil/C-CORE Iceberg Classifier Challenge”</a>，进入冰山识别任务简介页面。
 
-**步骤 3**  &#160; &#160; 单击“Data”页签，在文件列表中，单击“Download”，下载数据文件。其中，数据文件包括：
+**步骤 3**  &#160; &#160; 单击“Data”页签，在文件列表中，单击“Download All”，下载数据文件。其中，数据文件包括：
 
 - sample_submission.csv： 提交答案的模板。
 - test.json.7z：预测数据集，需要根据该数据集预测出答案，没有分类标签。
