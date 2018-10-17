@@ -55,7 +55,7 @@
 
 模型训练完成后，可以创建预测作业，将模型部署为在线预测服务，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 在“模型管理”界面，单击左上角的“导入”，参考图2填写参数。其中，名称可随意填写。[推理代码参考**dls_classification_service.py**](https://github.com/TccccD/modelarts-example/blob/master/Using%20MXNet%20to%20Create%20a%20MNIST%20Dataset%20Recognition%20Application/codes/dls_classification_service.py) 。将推理代码上传到obs，并将其文件路径设置到模型参数配置中的“推理代码”输入框。具体的模型参数如图2。
+**步骤 1**  &#160; &#160; 在“模型管理”界面，单击左上角的“导入”，参考图2填写参数。其中，名称可随意填写。[推理代码参考**dls_classification_service.py**]<a href ="codes/dls_classification_service.py">dls\_classification\_service.py.py</a> 。将推理代码上传到obs，并将其文件路径设置到模型参数配置中的“推理代码”输入框。具体的模型参数如图2。
 
 图2 导入模型参数配置
 
