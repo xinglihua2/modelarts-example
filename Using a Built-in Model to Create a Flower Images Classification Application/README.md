@@ -9,9 +9,9 @@
 ### 1. 准备数据
 下载flowers数据集并上传至华为云对象存储服务器（OBS）桶中，操作步骤如下：
 
-**步骤 1** &#160; &#160; 下载并解压缩数据集压缩包“flower_photos.tgz”，flowers数据集的下载路径为：http://download.tensorflow.org/example\_images/flower\_photos.tgz 。
+**步骤 1** &#160; &#160; 下载并解压缩数据集压缩包“flower_photos.tgz”，flowers数据集的下载路径为：[http://download.tensorflow.org/example_images/flower_photos.tgz](http://download.tensorflow.org/example_images/flower_photos.tgz)
 
-**步骤 2**&#160; &#160; 参考“上传业务数据”章节内容，将数据集上传至华为云OBS桶中（假设OBS桶路径为：“s3://obs-testdata/flowers_photos”）。
+**步骤 2**&#160; &#160; 参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将数据集上传至华为云OBS桶中（假设OBS桶路径为：“s3://obs-testdata/flowers_photos”）。
 
 该路径下包含了用户训练模型需要使用的所有图像文件， 该目录下有5个子目录，代表5种类别，分别为：daisy, dandelion, roses, sunflowers, tulips。每个子目录的文件夹名称即代表该分类的label信息，每个子目录下存放对应该目录的所有图像文件，则目录结构为：
 
@@ -32,17 +32,27 @@
 	       |- 41.jpg
 	       |- ...
 
-**步骤 3**  &#160; &#160; 参考“访问ModelArts”章节内容，登录“ModelArts”管理控制台，单击左侧导航栏的“开发环境”。
+**步骤 3**  &#160; &#160; 登录“ModelArts”管理控制台，单击左侧导航栏的“开发环境”。
 
-**步骤 4**&#160; &#160; 在“开发环境”界面，单击“Notebook”，点击左上角的“创建”，在弹出框中，输入开发环境名称、描述、镜像类型、实例规格、代码存储的OBS路径等参数，单击“立即创建”，完成创建操作。
+**步骤 4**&#160; &#160; 在“开发环境”界面，单击“Notebook”，点击左上角的“创建”，在弹出框中，输入开发环境名称、描述、镜像类型（请选择TF-1.8.0-python27或者TF-1.8.0-python36）、实例规格、代码存储的OBS路径等参数，单击“立即创建”，完成创建操作。
 
 **步骤 5**&#160; &#160; 在开发环境列表中，单击所创建开发环境右侧的“打开”，进入Jupyter Notebook文件目录界面。
 
 **步骤 6**&#160; &#160; 单击右上角的“New”，选择“Python 2” ，进入代码开发界面。参见数据格式转换完整代码，在Cell中填写数据代码。
 
-
+    import moxing.tensorflow as mox
     from moxing.tensorflow.datasets.raw.raw_dataset import split_image_classification_dataset
 
+    _S3_ACCESS_KEY_ID = (os.environ.get('S3_ACCESS_KEY_ID', None)
+                        or os.environ.get('AWS_ACCESS_KEY_ID', None))
+	_S3_SECRET_ACCESS_KEY = (os.environ.get('S3_SECRET_ACCESS_KEY', None)
+                            or os.environ.get('AWS_SECRET_ACCESS_KEY', None))
+	server='obs.cn-north-1.myhwclouds.com' 
+	_S3_USE_HTTPS = os.environ.get('S3_USE_HTTPS', True)
+	_S3_VERIFY_SSL = os.environ.get('S3_VERIFY_SSL', False)
+	mox.file.set_auth(ak=_S3_ACCESS_KEY_ID,sk=_S3_SECRET_ACCESS_KEY,server=server,port=None,
+                     is_secure=_S3_USE_HTTPS,ssl_verify=_S3_VERIFY_SSL)
+	    
     split_image_classification_dataset(
           split_spec={'train': 0.9, 'eval': 0.1},
           src_dir='s3://obs-testdata/flower_photos',
@@ -91,7 +101,7 @@
 
 **步骤 1**&#160; &#160; 返回“ModelArts”管理控制台界面。单击左侧导航栏的“训练作业”，进入“训练作业”界面。
 
-**步骤 2**&#160; &#160; 在“算法/内置算法”列表中找到名称为“ResNet_v1\_50”的模型，其他参数确认无误后，单击“立即创建”完成训练作业创建, 如图1。
+**步骤 2**&#160; &#160;填写参数。“名称”和“描述”可以随意填写，“数据来源”请选择“数据的存储位置”，即数据所在的父目录，在“算法/预置算法”列表中找到名称为“ResNet_v1\_50”的模型，“训练输出位置”请选择一个路径（建议新建一个文件夹）用于保存输出模型和预测文件，参数确认无误后，单击“立即创建”完成训练作业创建, 如图1。
 
 图1 训练作业的参数配置
 
@@ -103,14 +113,14 @@
 
 训练作业完成后，即完成了模型训练过程。如有问题，可点击作业名称，进入作业详情界面查看训练作业日志信息。
 
-**步骤 4**&#160; &#160; 当训练作业运行成功后，可在“训练输出”下查看新的模型文件。
+**步骤 4**&#160; &#160; 当训练作业运行成功后，可以在创建训练作业选择的训练输出位置OBS路径下看到新的模型文件。
 
 
 ### 3. 部署模型
 
 模型训练完成后，可以创建预测作业，将模型部署为在线预测服务，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 在“模型管理”界面，单击左上角的“导入”，参考图2填写参数。其中，名称可随意填写。
+**步骤 1**  &#160; &#160; 在“模型管理”界面，单击左上角的“导入”，参考图2填写参数。名称可随意填写，“元模型来源”选择“指定元模型位置”，“选择元模型”的路径与训练模型中“训练输出位置”保持一致，“AI引擎”选择“TensorFlow”。
 
 图2 导入模型参数配置
 
