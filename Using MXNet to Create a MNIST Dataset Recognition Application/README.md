@@ -32,7 +32,7 @@
 
 **步骤 2**  &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将脚本文件上传至华为云OBS桶 （假设OBS桶路径为：s3://obs-lpf/test/mnist/）。
 
-**步骤 3**  &#160; &#160; 参考<a href ="https://support.huaweicloud.com/usermanual-dls/dls_01_0006.html">“访问深度学习服务”</a>章节内容，登录“ModelArts”管理控制台。
+**步骤 3**  &#160; &#160; 登录“ModelArts”管理控制台。
 
 **步骤 4**  &#160; &#160; 在“训练作业”界面，单击左上角的“创建”，参考图1填写训练作业参数。
 
@@ -55,7 +55,7 @@
 
 模型训练完成后，可以创建预测作业，将模型部署为在线预测服务，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 在“模型管理”界面，单击左上角的“导入”，参考图2填写参数。其中，名称可随意填写。推理代码参考`codes/dls_classification_service.py` 。
+**步骤 1**  &#160; &#160; 在“模型管理”界面，单击左上角的“导入”，参考图2填写参数。其中，名称可随意填写。[推理代码参考**dls_classification_service.py**](https://github.com/TccccD/modelarts-example/blob/master/Using%20MXNet%20to%20Create%20a%20MNIST%20Dataset%20Recognition%20Application/codes/dls_classification_service.py) 。
 
 图2 导入模型参数配置
 
