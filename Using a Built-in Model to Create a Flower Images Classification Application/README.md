@@ -41,17 +41,16 @@
 **步骤 6**&#160; &#160; 单击右上角的“New”，选择“Python 2” ，进入代码开发界面。参见数据格式转换完整代码，在Cell中填写数据代码。
 
     import moxing.tensorflow as mox
+    import os
     from moxing.tensorflow.datasets.raw.raw_dataset import split_image_classification_dataset
 
-    _S3_ACCESS_KEY_ID = (os.environ.get('S3_ACCESS_KEY_ID', None)
-                        or os.environ.get('AWS_ACCESS_KEY_ID', None))
-	_S3_SECRET_ACCESS_KEY = (os.environ.get('S3_SECRET_ACCESS_KEY', None)
-                            or os.environ.get('AWS_SECRET_ACCESS_KEY', None))
-	server='obs.cn-north-1.myhwclouds.com' 
-	_S3_USE_HTTPS = os.environ.get('S3_USE_HTTPS', True)
-	_S3_VERIFY_SSL = os.environ.get('S3_VERIFY_SSL', False)
-	mox.file.set_auth(ak=_S3_ACCESS_KEY_ID,sk=_S3_SECRET_ACCESS_KEY,server=server,port=None,
-                     is_secure=_S3_USE_HTTPS,ssl_verify=_S3_VERIFY_SSL)
+	_S3_ACCESS_KEY_ID = os.environ.get('ACCESS_KEY_ID', None)                       
+	_S3_SECRET_ACCESS_KEY = os.environ.get('SECRET_ACCESS_KEY', None)
+	_endpoint = os.environ.get('ENDPOINT_URL', None)
+	_S3_USE_HTTPS = os.environ.get('_S3_ACCESS_KEY_ID', True)
+	_S3_VERIFY_SSL = os.environ.get('_S3_SECRET_ACCESS_KEY', False)
+	mox.file.set_auth(ak=_S3_ACCESS_KEY_ID,sk=_S3_SECRET_ACCESS_KEY,server=_endpoint,port=None,
+	                     is_secure=_S3_USE_HTTPS,ssl_verify=_S3_VERIFY_SSL)
 	    
     split_image_classification_dataset(
           split_spec={'train': 0.9, 'eval': 0.1},
