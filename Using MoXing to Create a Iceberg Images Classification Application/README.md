@@ -35,7 +35,19 @@
 
 **步骤 8**  &#160; &#160; 在开发环境列表中，单击所创建开发环境右侧的“打开”，进入Jupyter Notebook文件目录界面。
 
-**步骤 9**  &#160; &#160; 单击右上角的“New”，选择“Python 2” ，进入代码开发界面。在Cell中填写数据转换代码，完整代码请参见<a href ="codes/data_format_conversion.py">data\_format\_conversion.py</a>，请根据数据集实际存储位置，修改脚本代码中的BASE_PATH 参数, 即步骤5中上传的train.json和test.json的OBS父路径。
+**步骤 9**  &#160; &#160; 单击右上角的“New”，选择“Python 2” ，进入代码开发界面。在Cell中填写数据转换代码，完整代码请参见<a href ="codes/data_format_conversion.py">data\_format\_conversion.py</a>，请根据数据集实际存储位置，修改脚本代码中的BASE_PATH 参数, 即步骤5中上传的train.json和test.json的OBS父目录，在执行数据转换代码前，请先执行以下代码：
+
+    import moxing.tensorflow as mox
+
+    _S3_ACCESS_KEY_ID = (os.environ.get('S3_ACCESS_KEY_ID', None)
+                        or os.environ.get('AWS_ACCESS_KEY_ID', None))
+	_S3_SECRET_ACCESS_KEY = (os.environ.get('S3_SECRET_ACCESS_KEY', None)
+                            or os.environ.get('AWS_SECRET_ACCESS_KEY', None))
+	server='obs.cn-north-1.myhwclouds.com' 
+	_S3_USE_HTTPS = os.environ.get('S3_USE_HTTPS', True)
+	_S3_VERIFY_SSL = os.environ.get('S3_VERIFY_SSL', False)
+	mox.file.set_auth(ak=_S3_ACCESS_KEY_ID,sk=_S3_SECRET_ACCESS_KEY,server=server,port=None,
+                     is_secure=_S3_USE_HTTPS,ssl_verify=_S3_VERIFY_SSL)。
 
 **步骤 10**  &#160; &#160; 单击Cell上方的 ，运行代码（可能需要较长时间，若长时间没有执行结果，请尝试分段执行代码，将脚本分成多段放在不同的cell中执行）。代码运行成功后，将在“s3://automation/data/”目录下生成如下三个文件：
 
