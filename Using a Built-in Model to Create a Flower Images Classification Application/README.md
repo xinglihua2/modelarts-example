@@ -32,9 +32,9 @@
 	       |- 41.jpg
 	       |- ...
 
-**步骤 3**  &#160; &#160; 登录“ModelArts”管理控制台，单击左侧导航栏的“开发环境”。
+**步骤 3**  &#160; &#160; 登录“ModelArts”管理控制台，在“全局配置”界面添加访问秘钥。
 
-**步骤 4**&#160; &#160; 在“开发环境”界面，单击“Notebook”，点击左上角的“创建”，在弹出框中，输入开发环境名称、描述、镜像类型（请选择TF-1.8.0-python27或者TF-1.8.0-python36）、实例规格、代码存储的OBS路径等参数，单击“立即创建”，完成创建操作。
+**步骤 4**&#160; &#160; 单击左侧导航栏的“开发环境”，在“开发环境”界面，单击“Notebook”，点击左上角的“创建”，在弹出框中，输入开发环境名称、描述、镜像类型（请选择TF-1.8.0-python27或者TF-1.8.0-python36）、实例规格、代码存储的OBS路径等参数，单击“立即创建”，完成创建操作。
 
 **步骤 5**&#160; &#160; 在开发环境列表中，单击所创建开发环境右侧的“打开”，进入Jupyter Notebook文件目录界面。
 
@@ -49,6 +49,11 @@
 	_endpoint = os.environ.get('ENDPOINT_URL', None)
 	_S3_USE_HTTPS = os.environ.get('_S3_ACCESS_KEY_ID', True)
 	_S3_VERIFY_SSL = os.environ.get('_S3_SECRET_ACCESS_KEY', False)
+    os.environ['AWS_ACCESS_KEY_ID']=_S3_ACCESS_KEY_ID
+	os.environ['AWS_SECRET_ACCESS_KEY']=_S3_SECRET_ACCESS_KEY
+	os.environ['S3_ENDPOINT']=_endpoint
+	os.environ['S3_USE_HTTPS']=_S3_USE_HTTPS
+	os.environ["S3_VERIFY_SSL"]=_S3_VERIFY_SSL
 	mox.file.set_auth(ak=_S3_ACCESS_KEY_ID,sk=_S3_SECRET_ACCESS_KEY,server=_endpoint,port=None,
 	                     is_secure=_S3_USE_HTTPS,ssl_verify=_S3_VERIFY_SSL)
 	    
