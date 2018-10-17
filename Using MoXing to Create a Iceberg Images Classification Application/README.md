@@ -11,13 +11,21 @@
 
 **步骤 1**  &#160; &#160; 登录<a href="https://www.kaggle.com/competitions">Kaggle官网</a>，注册并登录账号。
 
-**步骤 2**  &#160; &#160; 选择<a href = "https://www.kaggle.com/c/statoil-iceberg-classifier-challenge">“Statoil/C-CORE Iceberg Classifier Challenge”</a>，进入冰山识别任务简介页面。
+**步骤 2**  &#160; &#160; 选择<a href = "https://www.kaggle.com/c/statoil-iceberg-classifier-challenge">“Statoil/C-CORE Iceberg Classifier Challenge”</a>，进入冰山识别任务简介页面，如图1所示。
+
+图1 冰山识别任务简介页面
+
+<img src="images/冰山识别介绍页.png" width="800px" />
 
 **步骤 3**  &#160; &#160; 单击“Data”页签，在文件列表中，单击“Download All”，下载数据文件。其中，数据文件包括：
 
 - sample_submission.csv： 提交答案的模板。
 - test.json.7z：预测数据集，需要根据该数据集预测出答案，没有分类标签。
 - train.json.7z：训练数据集，有分类标签。
+
+图2 数据下载界面
+
+<img src="images/数据下载界面.png" width="800px" />
 
 **步骤 4**  &#160; &#160; 下载数据集后，解压训练集和预测集，得到train.json和test.json（该格式可以通过pandas.read_json进行读取）。
 
@@ -31,11 +39,23 @@
 
 **步骤 6**  &#160; &#160; 登录“ModelArts”管理控制台，在“全局配置”界面添加访问秘钥。
 
+图3 添加访问秘钥
+
+<img src="images/添加访问秘钥.PNG" width="800px" />
+
 **步骤 7**  &#160; &#160; 在“开发环境”界面，点击“Notebook”，单击“创建”，在弹出框中填写对应参数，镜像类型请选择TF-1.8.0-python27或者TF-1.8.0-python36。单击“确定”，完成创建操作。
 
-**步骤 8**  &#160; &#160; 在开发环境列表中，单击所创建开发环境右侧的“打开”，进入Jupyter Notebook文件目录界面。
+图4 创建Notebook
 
-**步骤 9**  &#160; &#160; 单击右上角的“New”，选择“Python 2” ，进入代码开发界面。在Cell中填写数据转换代码，完整代码请参见<a href ="codes/data_format_conversion.py">data\_format\_conversion.py</a>，请根据数据集实际存储位置，修改脚本代码中的BASE_PATH 参数, 即步骤5中上传的train.json和test.json的OBS父目录，在执行数据转换代码前，请先执行以下代码：
+<img src="images/创建Notebook.PNG" width="800px" />
+
+**步骤 8**  &#160; &#160; 在开发环境列表中，单击所创建开发环境右侧的“打开”，进入Jupyter Notebook文件目录界面。单击右上角的“New”，选择“Python 3” ，进入代码开发界面。
+
+图5 创建Notebook开发界面
+
+<img src="images/创建Notebook开发界面.PNG" width="800px" />
+
+**步骤 9**  &#160; &#160; 在Cell中填写数据转换代码，完整代码请参见<a href ="codes/data_format_conversion.py">data\_format\_conversion.py</a>，请根据数据集实际存储位置，修改脚本代码中的BASE_PATH 参数, 即步骤5中上传的train.json和test.json的OBS父目录，在执行数据转换代码前，请先执行以下代码：
 
 	import moxing.tensorflow as mox
 	import os
@@ -66,9 +86,21 @@
 
 **步骤 2**  &#160; &#160; 返回“ModelArts”控制台，在“训练作业”界面。 单击左上角的“创建”。
 
+图6 训练作业界面
+
+<img src="images/训练作业界面.PNG" width="800px" />
+
 **步骤 3**  &#160; &#160; 填写参数。“名称”和“描述”可以随意填写，“数据来源”请选择“数据的存储位置”，“算法来源”请选择“常用框架”，“AI引擎”选择“TensorFlow"，“代码目录”请选择型训练脚本文件train\_iceberg.py所在的OBS父目录，“启动文件”请选择“train\_iceberg.py”，“训练输出位置”请选择一个路径（建议新建一个文件夹）用于保存输出模型和预测文件，参数确认无误后，单击“立即创建”，完成训练作业创建。
 
+图7 训练作业参数配置
+
+<img src="images/训练作业参数配置.PNG" width="800px" />
+
 **步骤 4**  &#160; &#160; 在模型训练的过程中或者完成后，可以通过创建TensorBoard作业查看一些参数的统计信息，如loss，accuracy等。在“训练作业”界面，点击TensorBoard，再点击“创建”按钮，参数“名称”可随意填写，“日志路径”请选择步骤3中“训练输出位置”参数中的路径。
+
+图8 创建tensorboard
+
+<img src="images/创建tensorboard.PNG" width="800px" />
 
 训练作业完成后，即完成了模型训练过程。如有问题，可点击作业名称，进入作业详情界面查看训练作业日志信息。
 
@@ -78,6 +110,10 @@
 **步骤 1**  &#160; &#160; 参考“2.训练模型”在“训练作业”界面，单击左上角的“创建”。
 
 **步骤 2**  &#160; &#160; 填写参数，参考“2.训练模型 步骤3”填写参数，“训练输出位置”请保持一致，另外添加参数“is_training=False”单击“立即创建”，完成训练作业创建。
+
+图9 预测
+
+<img src="images/训练作业参数配置（预测）.PNG" width="800px" />
 
 **步骤 3**  &#160; &#160; 训练作业执行完成后，在“训练作业”界面，单击iceberg_predict作业名称，进入作业的详情界面。在“训练日志”中，可以查看到在eval数据集上的loss值。在“训练输出位置”目录下，能看到用于保存预测结果的“submission.csv”文件。
 
