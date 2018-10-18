@@ -47,9 +47,11 @@ def input_fn(run_mode, **kwargs):
     num_epochs = None
     shuffle = True
     file_pattern = 'iceberg-train-*.tfrecord'
+    num_readers = 16
   else:
     num_epochs = None
     shuffle = False
+    num_readers = 1
     if run_mode == mox.ModeKeys.EVAL:
       num_samples = NUM_SAMPLES_EVAL
       file_pattern = 'iceberg-eval-*.tfrecord'
@@ -82,6 +84,7 @@ def input_fn(run_mode, **kwargs):
                              keys_to_features=keys_to_features,
                              items_to_handlers=items_to_handlers,
                              num_epochs=num_epochs,
+			     num_readers=num_readers,
                              shuffle=shuffle)
   
   if run_mode == mox.ModeKeys.PREDICT:
