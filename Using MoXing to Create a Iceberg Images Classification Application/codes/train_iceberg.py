@@ -30,7 +30,7 @@ from tensorflow.python.keras.layers import Conv2D, MaxPooling2D, Dense
 from tensorflow.python.keras.layers import Dropout, Flatten, Activation, Concatenate
 
 import moxing.tensorflow as mox
-
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 NUM_SAMPLES_TRAIN = 1176
 NUM_SAMPLES_EVAL = 295
 NUM_SAMPLES_TEST = 8424
@@ -41,7 +41,6 @@ tf.flags.DEFINE_string('train_url', '/tmp/delete_me/iceberg/v3', 'Dir of log')
 tf.flags.DEFINE_boolean('is_training', True, 'True for train. False for eval and predict.')
 flags = tf.flags.FLAGS
 
-
 def input_fn(run_mode, **kwargs):
   if run_mode == mox.ModeKeys.TRAIN:
     num_samples = NUM_SAMPLES_TRAIN
@@ -49,7 +48,7 @@ def input_fn(run_mode, **kwargs):
     shuffle = True
     file_pattern = 'iceberg-train-*.tfrecord'
   else:
-    num_epochs = 1
+    num_epochs = None
     shuffle = False
     if run_mode == mox.ModeKeys.EVAL:
       num_samples = NUM_SAMPLES_EVAL
@@ -89,7 +88,8 @@ def input_fn(run_mode, **kwargs):
     band_1, band_2, id_or_label, angle = dataset.get(['band_1', 'band_2', 'id', 'angle'])
     # Non-DMA safe string cannot tensor may not be copied to a GPU.
     # So we encode string to a list of integer.
-    id_or_label = tf.py_func(lambda str: np.array([ord(ch) for ch in str]), [id_or_label], tf.int64)
+    from moxing.framework.util import compat
+    id_or_label = tf.py_func(lambda str: np.array([ord(ch) for ch in compat.as_str(str)]), [id_or_label], tf.int64)
     # We know `id` is a string of 8 alphabets.
     id_or_label = tf.reshape(id_or_label, shape=(8,))
   else:
@@ -193,6 +193,7 @@ def model_fn(inputs, mode, **kwargs):
 
 def output_fn(outputs):
   global submission
+  submission = pd.DataFrame(columns=['id', 'is_iceberg'])
   for output in outputs:
     for id, logits in zip(output['id'], output['logits']):
       # Decode id from integer list to string.
@@ -208,9 +209,7 @@ def main(*args):
   num_gpus = mox.get_flag('num_gpus')
   num_workers = len(mox.get_flag('worker_hosts').split(','))
   steps_per_epoch = int(round(math.ceil(
-    float(NUM_SAMPLES_TRAIN) / (flags.batch_size * num_gpus * num_workers))))
-
-  submission = pd.DataFrame(columns=['id', 'is_iceberg'])
+    float(NUM_SAMPLES_TRAIN) / (flags.batch_size * num_gpus * num_workers)))) 
 
   if flags.is_training:
     mox.run(input_fn=input_fn,
@@ -241,7 +240,7 @@ def main(*args):
             log_every_n_steps=50,
             output_every_n_steps=int(NUM_SAMPLES_TEST / 24),
             checkpoint_path=flags.train_url)
-    
+			
     # Write results to file. tf.gfile allow writing file to EBS/s3
     submission_file = os.path.join(flags.train_url, 'submission.csv')
     result = submission.to_csv(path_or_buf=None, index=False)
