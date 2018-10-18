@@ -30,7 +30,7 @@ from tensorflow.python.keras.layers import Conv2D, MaxPooling2D, Dense
 from tensorflow.python.keras.layers import Dropout, Flatten, Activation, Concatenate
 
 import moxing.tensorflow as mox
-
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 NUM_SAMPLES_TRAIN = 1176
 NUM_SAMPLES_EVAL = 295
 NUM_SAMPLES_TEST = 8424
@@ -41,7 +41,6 @@ tf.flags.DEFINE_string('train_url', '/tmp/delete_me/iceberg/v3', 'Dir of log')
 tf.flags.DEFINE_boolean('is_training', True, 'True for train. False for eval and predict.')
 flags = tf.flags.FLAGS
 
-
 def input_fn(run_mode, **kwargs):
   if run_mode == mox.ModeKeys.TRAIN:
     num_samples = NUM_SAMPLES_TRAIN
@@ -49,7 +48,7 @@ def input_fn(run_mode, **kwargs):
     shuffle = True
     file_pattern = 'iceberg-train-*.tfrecord'
   else:
-    num_epochs = 1
+    num_epochs = None
     shuffle = False
     if run_mode == mox.ModeKeys.EVAL:
       num_samples = NUM_SAMPLES_EVAL
@@ -241,7 +240,7 @@ def main(*args):
             log_every_n_steps=50,
             output_every_n_steps=int(NUM_SAMPLES_TEST / 24),
             checkpoint_path=flags.train_url)
-    
+			
     # Write results to file. tf.gfile allow writing file to EBS/s3
     submission_file = os.path.join(flags.train_url, 'submission.csv')
     result = submission.to_csv(path_or_buf=None, index=False)
