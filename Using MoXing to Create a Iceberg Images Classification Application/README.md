@@ -35,7 +35,7 @@
 - inc_angle：雷达图拍摄角度，单位是角度。
 - is_iceberg： 标注，冰山为1，船为0。
 
-**步骤 5**  &#160; &#160; 参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将json数据集上传至华为云OBS桶 （假设OBS桶路径为：s3://automation/data/）。
+**步骤 5**  &#160; &#160; 参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将json数据集上传至华为云OBS桶 （假设OBS桶路径为：s3://obs-testdata/iceberg/）。
 
 **步骤 6**  &#160; &#160; 登录“ModelArts”管理控制台，在“全局配置”界面添加访问秘钥。
 
@@ -73,7 +73,7 @@
 	mox.file.set_auth(ak=_S3_ACCESS_KEY_ID,sk=_S3_SECRET_ACCESS_KEY,server=_endpoint,port=None,
 	                     is_secure=_S3_USE_HTTPS,ssl_verify=_S3_VERIFY_SSL)
 
-**步骤 10**  &#160; &#160; 单击Cell上方的 ，运行代码（可能需要较长时间，若长时间没有执行结果，请尝试分段执行代码，将脚本分成多段放在不同的cell中执行）。代码运行成功后，将在“s3://automation/data/”目录下生成如下三个文件：
+**步骤 10**  &#160; &#160; 单击Cell上方的 ，运行代码（可能需要较长时间，若长时间没有执行结果，请尝试分段执行代码，将脚本分成多段放在不同的cell中执行）。代码运行成功后，将在“s3://obs-testdata/iceberg/”目录下生成如下三个文件：
 
 - iceberg-train-1176.tfrecord：训练数据集
 - iceberg-eval-295.tfrecord：验证数据集
