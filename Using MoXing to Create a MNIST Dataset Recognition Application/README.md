@@ -21,7 +21,7 @@
 - train-labels-idx1-ubyte.gz：训练集标签，共包含60000个样本的类别标签。
 
 
-**步骤 2**  &#160; &#160; 参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，分别上传至华为云OBS桶 （假设OBS桶路径为：s3://obs-lpf/data/mnist/）。
+**步骤 2**  &#160; &#160; 参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，分别上传至华为云OBS桶 （假设OBS桶路径为：s3://obs-testdata/mnist/）。
 
 
 ### 2. 训练模型
