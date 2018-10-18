@@ -6,7 +6,7 @@ import moxing.tensorflow as mox
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 slim = tf.contrib.slim
-BASE_PATH = 's3://automation/data/'
+BASE_PATH = 's3://obs-testdata/iceberg/'
 
 
 def get_image(df):
