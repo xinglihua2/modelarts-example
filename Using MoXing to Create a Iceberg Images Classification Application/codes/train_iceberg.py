@@ -42,7 +42,7 @@ NUM_SAMPLES_TEST = 8424
 tf.flags.DEFINE_integer('batch_size', 16, 'Mini-batch size')
 tf.flags.DEFINE_string('data_url', None, 'Dir of dataset')
 tf.flags.DEFINE_string('train_url', None, 'Dir of log')
-tf.flags.DEFINE_boolean('is_training', False, 'True for train. False for eval and predict.')
+tf.flags.DEFINE_boolean('is_training', True, 'True for train. False for eval and predict.')
 flags = tf.flags.FLAGS
 
 
