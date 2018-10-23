@@ -20,6 +20,7 @@ from __future__ import division
 from __future__ import print_function
 
 import os
+
 os.environ.pop('http_proxy', None)
 import math
 import numpy as np
@@ -28,18 +29,23 @@ import tensorflow as tf
 from tensorflow.contrib import slim
 from tensorflow.python.keras.layers import Conv2D, MaxPooling2D, Dense
 from tensorflow.python.keras.layers import Dropout, Flatten, Activation, Concatenate
+from moxing.tensorflow.datasets.tfrecord_common import ImageClassificationTFRecordMetadata
+from moxing.tensorflow.datasets.tfrecord_common import BaseTFRecordDataset
+from moxing.tensorflow.datasets.tfrecord_common import ImageClassificationTFRecordDataset
 
 import moxing.tensorflow as mox
-os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 NUM_SAMPLES_TRAIN = 1176
 NUM_SAMPLES_EVAL = 295
 NUM_SAMPLES_TEST = 8424
 
 tf.flags.DEFINE_integer('batch_size', 16, 'Mini-batch size')
-tf.flags.DEFINE_string('data_url', '/export1/zzy/iceberg', 'Dir of dataset')
-tf.flags.DEFINE_string('train_url', '/tmp/delete_me/iceberg/v3', 'Dir of log')
+tf.flags.DEFINE_string('data_url', None, 'Dir of dataset')
+tf.flags.DEFINE_string('train_url', None, 'Dir of log')
 tf.flags.DEFINE_boolean('is_training', True, 'True for train. False for eval and predict.')
 flags = tf.flags.FLAGS
+
 
 def input_fn(run_mode, **kwargs):
   if run_mode == mox.ModeKeys.TRAIN:
@@ -59,34 +65,76 @@ def input_fn(run_mode, **kwargs):
       num_samples = NUM_SAMPLES_TEST
       file_pattern = 'iceberg-test-*.tfrecord'
 
-  keys_to_features = {
-    'band_1': tf.FixedLenFeature((75 * 75,), tf.float32, default_value=None),
-    'band_2': tf.FixedLenFeature((75 * 75,), tf.float32, default_value=None),
-    'angle': tf.FixedLenFeature([1], tf.float32, default_value=None),
-  }
+  custom_feature_keys = ['band_1', 'band_2', 'angle']
+  custom_feature_values = [tf.FixedLenFeature((75 * 75,), tf.float32, default_value=None),
+              tf.FixedLenFeature((75 * 75,), tf.float32, default_value=None),
+              tf.FixedLenFeature([], tf.float32, default_value=None)]
 
-  items_to_handlers = {
-    'band_1': slim.tfexample_decoder.Tensor('band_1', shape=[75, 75]),
-    'band_2': slim.tfexample_decoder.Tensor('band_2', shape=[75, 75]),
-    'angle': slim.tfexample_decoder.Tensor('angle', shape=[])
-  }
-  
   if run_mode == mox.ModeKeys.PREDICT:
-    keys_to_features['id'] = tf.FixedLenFeature([1], tf.string, default_value=None)
-    items_to_handlers['id'] = slim.tfexample_decoder.Tensor('id', shape=[])
+    custom_feature_keys.append('id')
+    custom_feature_values.append(tf.FixedLenFeature([], tf.string, default_value=None))
+
   else:
-    keys_to_features['label'] = tf.FixedLenFeature([1], tf.int64, default_value=None)
-    items_to_handlers['label'] = slim.tfexample_decoder.Tensor('label', shape=[])
-  
-  dataset = mox.get_tfrecord(dataset_dir=flags.data_url,
-                             file_pattern=file_pattern,
-                             num_samples=num_samples,
-                             keys_to_features=keys_to_features,
-                             items_to_handlers=items_to_handlers,
-                             num_epochs=num_epochs,
-			     num_readers=num_readers,
-                             shuffle=shuffle)
-  
+    custom_feature_keys.append('label')
+    custom_feature_values.append(tf.FixedLenFeature([], tf.int64, default_value=None))
+
+  dataset_meta = ImageClassificationTFRecordMetadata(flags.data_url,
+                                                     file_pattern,
+                                                     num_samples=num_samples,
+                                                     redirect_dir=None)
+
+  class IcebergTFRecordDataset(BaseTFRecordDataset):
+
+    def _parser(self, record):
+      features = dict(zip(custom_feature_keys, custom_feature_values))
+      parsed = tf.parse_single_example(record, features)
+      feature_tensors = [parsed[key] for key in custom_feature_keys]
+      return tuple(feature_tensors)
+
+    def _build_feature(self, band_1, band_2, angle, id_or_label):
+      band_1 = tf.reshape(band_1, shape=[75, 75])
+      band_2 = tf.reshape(band_2, shape=[75, 75])
+      self._add_feature('band_1', band_1)
+      self._add_feature('band_2', band_2)
+      self._add_feature('angle', angle)
+      if 'id' in custom_feature_keys:
+        self._add_feature('id', id_or_label)
+      else:
+        self._add_feature('label', id_or_label)
+
+  if tf.__version__.split('.')[1] == '8':
+    dataset = IcebergTFRecordDataset(dataset_meta,
+                                     shuffle=shuffle,
+                                     num_parallel=num_readers,
+                                     num_epochs=num_epochs)
+  else:
+    keys_to_features = {
+      'band_1': tf.FixedLenFeature((75 * 75,), tf.float32, default_value=None),
+      'band_2': tf.FixedLenFeature((75 * 75,), tf.float32, default_value=None),
+      'angle': tf.FixedLenFeature([1], tf.float32, default_value=None),
+    }
+
+    items_to_handlers = {
+      'band_1': slim.tfexample_decoder.Tensor('band_1', shape=[75, 75]),
+      'band_2': slim.tfexample_decoder.Tensor('band_2', shape=[75, 75]),
+      'angle': slim.tfexample_decoder.Tensor('angle', shape=[])
+    }
+
+    if run_mode == mox.ModeKeys.PREDICT:
+      keys_to_features['id'] = tf.FixedLenFeature([1], tf.string, default_value=None)
+      items_to_handlers['id'] = slim.tfexample_decoder.Tensor('id', shape=[])
+    else:
+      keys_to_features['label'] = tf.FixedLenFeature([1], tf.int64, default_value=None)
+      items_to_handlers['label'] = slim.tfexample_decoder.Tensor('label', shape=[])
+
+    dataset = ImageClassificationTFRecordDataset(dataset_meta,
+                                                 keys_to_features,
+                                                 items_to_handlers,
+                                                 shuffle=shuffle,
+                                                 num_readers=num_readers,
+                                                 num_epochs=num_epochs)
+
+
   if run_mode == mox.ModeKeys.PREDICT:
     band_1, band_2, id_or_label, angle = dataset.get(['band_1', 'band_2', 'id', 'angle'])
     # Non-DMA safe string cannot tensor may not be copied to a GPU.
@@ -97,9 +145,9 @@ def input_fn(run_mode, **kwargs):
     id_or_label = tf.reshape(id_or_label, shape=(8,))
   else:
     band_1, band_2, id_or_label, angle = dataset.get(['band_1', 'band_2', 'label', 'angle'])
-    
+
   band_3 = band_1 + band_2
-  
+
   # Rescale the input image to [0, 1]
   def rescale(*args):
     ret_images = []
@@ -110,59 +158,59 @@ def input_fn(run_mode, **kwargs):
       image = (image - image_min) / (image_max - image_min)
       ret_images.append(image)
     return ret_images
-  
+
   band_1, band_2, band_3 = rescale(band_1, band_2, band_3)
   image = tf.stack([band_1, band_2, band_3], axis=2)
-  
+
   # Data augementation
   if run_mode == mox.ModeKeys.TRAIN:
     image = tf.image.random_flip_left_right(image)
     image = tf.image.random_flip_up_down(image)
     image = tf.image.rot90(image, k=tf.random_uniform(shape=(), maxval=3, minval=0, dtype=tf.int32))
-  
+
   return image, id_or_label, angle
 
 
 def model_v1(images, angles, run_mode):
   is_training = (run_mode == mox.ModeKeys.TRAIN)
-  
+
   # Conv Layer 1
   x = Conv2D(64, kernel_size=(3, 3), activation='relu', input_shape=(75, 75, 3))(images)
   x = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(x)
   x = Dropout(0.2)(x, training=is_training)
-  
+
   # Conv Layer 2
   x = Conv2D(128, kernel_size=(3, 3), activation='relu')(x)
   x = MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(x)
   x = Dropout(0.2)(x, training=is_training)
-  
+
   # Conv Layer 3
   x = Conv2D(128, kernel_size=(3, 3), activation='relu')(x)
   x = MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(x)
   x = Dropout(0.2)(x, training=is_training)
-  
+
   # Conv Layer 4
   x = Conv2D(64, kernel_size=(3, 3), activation='relu')(x)
   x = MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(x)
   x = Dropout(0.2)(x, training=is_training)
-  
+
   # Flatten the data for upcoming dense layers
   x = Flatten()(x)
   x = Concatenate()([x, angles])
-  
+
   # Dense Layers
   x = Dense(512)(x)
   x = Activation('relu')(x)
   x = Dropout(0.2)(x, training=is_training)
-  
+
   # Dense Layer 2
   x = Dense(256)(x)
   x = Activation('relu')(x)
   x = Dropout(0.2)(x, training=is_training)
-  
+
   # Sigmoid Layer
   logits = Dense(2)(x)
-  
+
   return logits
 
 
@@ -173,7 +221,7 @@ def model_fn(inputs, mode, **kwargs):
   angles = tf.expand_dims(angles, 1)
   # Apply your version of model
   logits = model_v1(images, angles, mode)
-  
+
   if mode == mox.ModeKeys.PREDICT:
     logits = tf.nn.softmax(logits)
     # clip logits to get lower loss value.
@@ -208,11 +256,10 @@ def output_fn(outputs):
 
 
 def main(*args):
-
   num_gpus = mox.get_flag('num_gpus')
   num_workers = len(mox.get_flag('worker_hosts').split(','))
   steps_per_epoch = int(round(math.ceil(
-    float(NUM_SAMPLES_TRAIN) / (flags.batch_size * num_gpus * num_workers)))) 
+    float(NUM_SAMPLES_TRAIN) / (flags.batch_size * num_gpus * num_workers))))
 
   if flags.is_training:
     mox.run(input_fn=input_fn,
@@ -243,7 +290,7 @@ def main(*args):
             log_every_n_steps=50,
             output_every_n_steps=int(NUM_SAMPLES_TEST / 24),
             checkpoint_path=flags.train_url)
-			
+
     # Write results to file. tf.gfile allow writing file to EBS/s3
     submission_file = os.path.join(flags.train_url, 'submission.csv')
     result = submission.to_csv(path_or_buf=None, index=False)
