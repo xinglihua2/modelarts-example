@@ -58,7 +58,7 @@
 
 	_S3_ACCESS_KEY_ID = os.environ.get('ACCESS_KEY_ID', None)                       
 	_S3_SECRET_ACCESS_KEY = os.environ.get('SECRET_ACCESS_KEY', None)
-	_endpoint = os.environ.get('ENDPOINT_URL', None)
+	_endpoint = os.environ.get('ENDPOINT_URL', None).split('://')[1]
 	_S3_USE_HTTPS = os.environ.get('_S3_ACCESS_KEY_ID', True)
 	_S3_VERIFY_SSL = os.environ.get('_S3_SECRET_ACCESS_KEY', False)
     os.environ['AWS_ACCESS_KEY_ID']=_S3_ACCESS_KEY_ID
