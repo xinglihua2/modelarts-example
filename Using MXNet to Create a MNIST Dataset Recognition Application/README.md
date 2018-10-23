@@ -21,8 +21,7 @@
 - train-images-idx3-ubyte.gz：训练集，共包含60000个样本。
 - train-labels-idx1-ubyte.gz：训练集标签，共包含60000个样本的类别标签。
 
-
-**步骤 2**  &#160; &#160; 解压缩4个压缩文件，并参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，分别上传至华为云OBS桶 （假设OBS桶路径为：s3://obs-lpf/data/mnist/）。
+**步骤 2**  &#160; &#160; 解压缩4个压缩文件，并参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，分别上传至华为云OBS桶 （假设OBS桶路径为：s3://mxnet-test/data/）。
 
 
 ### 2. 训练模型
@@ -30,7 +29,7 @@
 
 **步骤 1**  &#160; &#160; 下载由MXNet原生接口编写的模型训练脚本文件<a href ="codes/train_mnist.py">train\_mnist.py</a>。
 
-**步骤 2**  &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将脚本文件上传至华为云OBS桶 （假设OBS桶路径为：s3://obs-lpf/test/mnist/）。
+**步骤 2**  &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将脚本文件上传至华为云OBS桶 （假设OBS桶路径为：s3://mxnet-test/data/）。
 
 **步骤 3**  &#160; &#160; 登录“ModelArts”管理控制台。
 
@@ -63,7 +62,7 @@
 
 
 
-其中元模型的路径需要设置为.params和.json文件所在文件夹的上一层文件夹，比如图3红框的路径：/dls-tcd/ckpt/
+其中元模型的路径需要设置为.params和.json文件所在文件夹的上一层文件夹，比如图3红框的路径：/mxnet-test/ckpt/
 
 图3 元模型指定路径
 
