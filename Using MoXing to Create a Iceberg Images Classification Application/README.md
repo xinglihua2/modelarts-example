@@ -56,7 +56,7 @@
     
 	_S3_ACCESS_KEY_ID = os.environ.get('ACCESS_KEY_ID', None)                       
 	_S3_SECRET_ACCESS_KEY = os.environ.get('SECRET_ACCESS_KEY', None)
-	_endpoint = os.environ.get('ENDPOINT_URL', None)
+	_endpoint = os.environ.get('ENDPOINT_URL', None).split('://')[1]
 	_S3_USE_HTTPS = os.environ.get('S3_USE_HTTPS', True)
 	_S3_VERIFY_SSL = os.environ.get('S3_VERIFY_SSL', False)
 	os.environ['AWS_ACCESS_KEY_ID']=_S3_ACCESS_KEY_ID
@@ -67,11 +67,15 @@
 	mox.file.set_auth(ak=_S3_ACCESS_KEY_ID,sk=_S3_SECRET_ACCESS_KEY,server=_endpoint,port=None,
 	                     is_secure=_S3_USE_HTTPS,ssl_verify=_S3_VERIFY_SSL)
 
-**步骤 10**  &#160; &#160; 单击Cell上方的 ，运行代码（可能需要较长时间，若长时间没有执行结果，请尝试分段执行代码，将脚本分成多段放在不同的cell中执行）。代码运行成功后，将在“s3://obs-testdata/iceberg/”目录下生成如下三个文件：
+**步骤 10**  &#160; &#160; 单击Cell上方的 ，运行代码（可能需要较长时间，若长时间没有执行结果，请尝试分段执行代码，将脚本分成多段放在不同的cell中执行，参见图4）。代码运行成功后，将在“s3://obs-testdata/iceberg/”目录下生成如下三个文件：
 
 - iceberg-train-1176.tfrecord：训练数据集
 - iceberg-eval-295.tfrecord：验证数据集
 - iceberg-test-8424.tfrecord：预测数据集
+
+图4 脚本分段执行
+
+<img src="images/分段执行.PNG" width="800px" />
 
 ### 2. 训练模型
 将模型训练脚本上传至OBS桶中（您也可以在ModelArts的开发环境中编写模型训练脚本，并转成py文件），然后创建训练作业进行模型训练，操作步骤如下：
@@ -80,19 +84,19 @@
 
 **步骤 2**  &#160; &#160; 返回“ModelArts”控制台，在“训练作业”界面。 单击左上角的“创建”。
 
-图4 训练作业界面
+图5 训练作业界面
 
 <img src="images/训练作业界面.PNG" width="800px" />
 
 **步骤 3**  &#160; &#160; 填写参数。“名称”和“描述”可以随意填写，“数据来源”请选择“数据的存储位置”，“算法来源”请选择“常用框架”，“AI引擎”选择“TensorFlow"，“代码目录”请选择型训练脚本文件train\_iceberg.py所在的OBS父目录，“启动文件”请选择“train\_iceberg.py”，“训练输出位置”请选择一个路径（建议新建一个文件夹）用于保存输出模型和预测文件，参数确认无误后，单击“立即创建”，完成训练作业创建。
 
-图5 训练作业参数配置
+图6 训练作业参数配置
 
 <img src="images/训练作业参数配置.PNG" width="800px" />
 
 **步骤 4**  &#160; &#160; 在模型训练的过程中或者完成后，可以通过创建TensorBoard作业查看一些参数的统计信息，如loss，accuracy等。在“训练作业”界面，点击TensorBoard，再点击“创建”按钮，参数“名称”可随意填写，“日志路径”请选择步骤3中“训练输出位置”参数中的路径。
 
-图6 创建tensorboard
+图7 创建tensorboard
 
 <img src="images/创建tensorboard.PNG" width="800px" />
 
@@ -105,7 +109,7 @@
 
 **步骤 2**  &#160; &#160; 填写参数，参考“2.训练模型 步骤3”填写参数，“训练输出位置”请保持一致，预测‘计算节点个数’只能选择1个节点，另外添加参数“is_training=False”单击“立即创建”，完成训练作业创建。
 
-图7 预测
+图8 预测
 
 <img src="images/训练作业参数配置（预测）.PNG" width="800px" />
 
