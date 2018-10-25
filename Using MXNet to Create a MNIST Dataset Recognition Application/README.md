@@ -90,3 +90,6 @@
 图5 在线服务测试
 
 <img src="images/在线服务测试.PNG" width="1000px" />
+
+如果想使用自己的手写图片，可以参照[make_your_mnist.py](mnist_pic/make_your_mnist.py)，只需修改图片数据的路径即可，**其中原图需要使用黑底白字**。
+
