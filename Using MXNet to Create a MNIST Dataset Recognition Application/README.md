@@ -41,7 +41,7 @@
 <img src="images/分布式作业参数1.PNG" width="800px" />
 <img src="images/分布式作业参数2.PNG" width="800px" />
 
-使用单计算节点时，kv_store设置为‘local’或‘device’；如果计算节点个数大于1，kv_store需要设置为‘dist_sync’或‘dist_sync_device’。
+说明：使用单计算节点时，kv_store设置为‘local’或‘device’；如果计算节点个数大于1，kv_store需要设置为‘dist_sync’或‘dist_sync_device’。
 
 **步骤 5**  &#160; &#160;  参数确认无误后，单击“立即创建”，完成训练作业创建。
 
