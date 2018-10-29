@@ -27,9 +27,9 @@
 ### 2. 训练模型
 接下来，要编写模型训练脚本代码（本案例中已编写好了训练脚本），并完成模型训练，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 下载由MXNet原生接口编写的模型训练脚本文件<a href ="codes/train_mnist.py">train\_mnist.py</a>。
+**步骤 1**  &#160; &#160; 复制由MXNet原生接口编写的模型训练脚本文件<a href ="codes/train_mnist.py">train\_mnist.py</a>。
 
-**步骤 2**  &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将脚本文件上传至华为云OBS桶 （假设OBS桶路径为：s3://mxnet-test/data/）。
+**步骤 2**  &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将脚本文件上传至华为云OBS桶 （假设OBS桶路径为：s3://mxnet-test/code/）。
 
 **步骤 3**  &#160; &#160; 登录“ModelArts”管理控制台。
 
@@ -41,9 +41,7 @@
 <img src="images/分布式作业参数1.PNG" width="800px" />
 <img src="images/分布式作业参数2.PNG" width="800px" />
 
-单计算节点：kv_store设置为‘local’或‘device’
-
-多计算节点：kv_store设置为‘dist_sync’或‘dist_sync_device’
+使用单计算节点时，kv_store设置为‘local’或‘device’；如果计算节点个数大于1，kv_store需要设置为‘dist_sync’或‘dist_sync_device’。
 
 **步骤 5**  &#160; &#160;  参数确认无误后，单击“立即创建”，完成训练作业创建。
 
