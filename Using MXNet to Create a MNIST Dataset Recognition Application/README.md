@@ -27,42 +27,37 @@
 ### 2. 训练模型
 接下来，要编写模型训练脚本代码（本案例中已编写好了训练脚本），并完成模型训练，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 复制由MXNet原生接口编写的模型训练脚本文件<a href ="codes/train_mnist.py">train\_mnist.py</a>。
+**步骤 1**  &#160; &#160; 复制由MXNet原生接口编写的模型训练脚本文件<a href ="codes/train_mnist.py">train\_mnist.py</a>，（在github界面右上角点击raw）并将其粘贴到本地的train_mnist.py脚本中，或登录github进行下载。
 
-**步骤 2**  &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将脚本文件上传至华为云OBS桶 （假设OBS桶路径为：s3://mxnet-test/code/）。
+**步骤 2**     登录“ModelArts”管理控制台，在“全局配置”界面添加访问秘钥。如图1。
 
-**步骤 3**  &#160; &#160; 登录“ModelArts”管理控制台。
+图1 添加访问秘钥![img](file:///C:/Users/c00451803/AppData/Roaming/eSpace_Desktop/UserData/c00451803/imagefiles/754FCFAF-116A-4220-BB53-3C1D5F2C3F68.png)
 
-**步骤 4**  &#160; &#160; 在“训练作业”界面，单击左上角的“创建”，参考图1填写训练作业参数。
+**步骤 3** &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将脚本文件上传至华为云OBS桶 （s3://你的桶名/你的文件名/,注意路径中不要出现中文）。
+
+**步骤 4**  &#160; &#160; 在“训练作业”界面，单击左上角的“创建”，参考图1填写训练作业参数。**AI引擎选用mxnet。**
 
 
-图1 训练作业参数配置
+图2 训练作业参数配置
 
 <img src="images/分布式作业参数1.PNG" width="800px" />
-<img src="images/分布式作业参数2.PNG" width="800px" />
 
-参数说明：
+![img](file:///C:/Users/c00451803/AppData/Roaming/eSpace_Desktop/UserData/c00451803/imagefiles/74123CF3-A6D7-415F-847B-005CB9FC1BB5.png)
+
+可选运行参数说明：
 
 1. num_epochs：训练需要迭代的次数，默认10；
-
 2. batch_size：训练的每一步包含的样本数量大小， 默认128；
-
 3. kv_store：使用单计算节点时，kv_store设置为‘local’或‘device’；如果计算节点个数大于1，kv_store需要设置为‘dist_sync’或‘dist_sync_device’，默认‘device’；
-
 4. num_classes：类别数量，默认10；
-
 5. lr：学习率，默认0.05；
-
 6. disp_batches：每隔多少步输出一次，默认20；
-
 7. num_gpus：gpu数量；
-
 8. export_model：是否导出可供预测服务的模型参数，默认为1，表示输出；
-
-9. train_url：模型输出路径；
-
-10. data_url：数据集路径。
-
+9. train_url（训练输出路径）：模型输出路径，可在运行参数添加train_url或训练输出位置二选一添加；
+10. data_url：数据集路径；
+11. 计算节点规格前者为cpu，后者1*P100为GPU，训练作业推荐使用后者GPU；
+12. 计算节点个数，2个及以上为分布式训练，需要更改对应的运行参数kv_store，1则为单机模式不用更改参数kv_store；
 
 **步骤 5**  &#160; &#160;  参数确认无误后，单击“立即创建”，完成训练作业创建。
 
@@ -77,11 +72,11 @@
 
 图2 导入模型参数配置
 
-<img src="images/导入模型参数配置.PNG" width="800px" />
+![img](file:///C:/Users/c00451803/AppData/Roaming/eSpace_Desktop/UserData/c00451803/imagefiles/D95CDB8B-D83C-47E2-9869-7FA3F0F867F2.png)
 
 
 
-其中元模型的路径需要设置为.params和.json文件所在文件夹的上一层文件夹，比如图3红框的路径：/mxnet-test/ckpt/
+其中元模型的路径需要设置为.params和.json文件所在文件夹的上一层文件夹，比如图3红框的路径：/test-only/ckpt/为之前训练作业的输出路径。
 
 图3 元模型指定路径
 
@@ -117,4 +112,6 @@
 <img src="images/在线服务测试.PNG" width="1000px" />
 
 如果想使用自己的手写图片，可以参照[make_your_mnist.py](mnist_pic/make_your_mnist.py)，只需修改图片数据的路径即可，**其中原图需要使用黑底白字**。
+
+输出结果解释：'class'就是类的名称，比如这里我们第一项class为6，就是数字6这一类。类后的参数为概率，即预测为6的可能性为100%，别的数字都为0。
 
