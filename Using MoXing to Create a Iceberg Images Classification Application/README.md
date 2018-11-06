@@ -56,13 +56,13 @@
     
 	_S3_ACCESS_KEY_ID = os.environ.get('ACCESS_KEY_ID', None)                       
 	_S3_SECRET_ACCESS_KEY = os.environ.get('SECRET_ACCESS_KEY', None)
-	_endpoint = os.environ.get('ENDPOINT_URL', None).split('://')[1]
+	_endpoint='100.125.40.3'
 	_S3_USE_HTTPS = os.environ.get('S3_USE_HTTPS', True)
 	_S3_VERIFY_SSL = os.environ.get('S3_VERIFY_SSL', False)
 	os.environ['AWS_ACCESS_KEY_ID']=_S3_ACCESS_KEY_ID
 	os.environ['AWS_SECRET_ACCESS_KEY']=_S3_SECRET_ACCESS_KEY
 	os.environ['S3_ENDPOINT']=_endpoint
-	os.environ['S3_USE_HTTPS']='1'
+	os.environ['S3_USE_HTTPS']='0'
 	os.environ["S3_VERIFY_SSL"]='0'
 	mox.file.set_auth(ak=_S3_ACCESS_KEY_ID,sk=_S3_SECRET_ACCESS_KEY,server=_endpoint,port=None,
 	                     is_secure=_S3_USE_HTTPS,ssl_verify=_S3_VERIFY_SSL)
