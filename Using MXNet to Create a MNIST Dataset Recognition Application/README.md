@@ -31,7 +31,7 @@
 
 **步骤 2**     登录“ModelArts”管理控制台，在“全局配置”界面添加访问秘钥。如图1。
 
-<img src="images/添加aksk.PNG" width="800px" />
+<img src="images/添加aksk.png" width="800px" />
 
 **步骤 3** &#160; &#160; 参考<a href = "https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将脚本文件上传至华为云OBS桶 （s3://你的桶名/你的文件名/,注意路径中不要出现中文）。
 
@@ -42,7 +42,7 @@
 
 <img src="images/分布式作业参数1.PNG" width="800px" />
 
-<img src="images/训练作业参数.PNG" width="800px" />
+<img src="images/训练作业参数.png" width="800px" />
 
 可选运行参数说明：
 
@@ -72,7 +72,7 @@
 
 图2 导入模型参数配置
 
-<img src="images/导入参数.PNG" width="800px" />
+<img src="images/导入参数.png" width="800px" />
 
 
 
