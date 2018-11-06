@@ -31,7 +31,7 @@
 
 **步骤 5**  &#160; &#160; 参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将json数据集上传至华为云OBS桶 （假设OBS桶路径为：s3://modelarts-example/datasets/）。
 
-**步骤 6**  &#160; &#160; 登录“ModelArts”管理控制台，在“全局配置”界面添加访问秘钥。
+**步骤 6**  &#160; &#160; 登录[“ModelArts”](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/dashboard)管理控制台，在“全局配置”界面添加访问秘钥。
 
 图1 添加访问秘钥
 
