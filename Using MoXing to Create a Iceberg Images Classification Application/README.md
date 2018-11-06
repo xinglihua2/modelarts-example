@@ -62,10 +62,12 @@
 	os.environ['AWS_ACCESS_KEY_ID']=_S3_ACCESS_KEY_ID
 	os.environ['AWS_SECRET_ACCESS_KEY']=_S3_SECRET_ACCESS_KEY
 	os.environ['S3_ENDPOINT']=_endpoint
-	os.environ['S3_USE_HTTPS']='0'
+	os.environ['S3_USE_HTTPS']='1'
 	os.environ["S3_VERIFY_SSL"]='0'
 	mox.file.set_auth(ak=_S3_ACCESS_KEY_ID,sk=_S3_SECRET_ACCESS_KEY,server=_endpoint,port=None,
 	                     is_secure=_S3_USE_HTTPS,ssl_verify=_S3_VERIFY_SSL)
+        mox.file.set_auth(ssl_verify=False)
+        mox.file.set_auth(is_secure=False)
 
 **步骤 10**  &#160; &#160; 单击Cell上方的 ，运行代码（可能需要较长时间，若长时间没有执行结果，请尝试分段执行代码，将脚本分成多段放在不同的cell中执行，参见图4）。代码运行成功后，将在“s3://obs-testdata/iceberg/”目录下生成如下三个文件：
 
