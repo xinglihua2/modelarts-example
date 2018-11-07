@@ -29,9 +29,9 @@
 - inc_angle：雷达图拍摄角度，单位是角度。
 - is_iceberg： 标注，冰山为1，船为0。
 
-**步骤 5**  &#160; &#160; 参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将json数据集上传至华为云OBS桶 （假设OBS桶路径为：s3://obs-testdata/iceberg/）。
+**步骤 5**  &#160; &#160; 参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将json数据集上传至华为云OBS桶 （假设OBS桶路径为：s3://modelarts-example/datasets/）。
 
-**步骤 6**  &#160; &#160; 登录“ModelArts”管理控制台，在“全局配置”界面添加访问秘钥。
+**步骤 6**  &#160; &#160; 登录[“ModelArts”](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/dashboard)管理控制台，在“全局配置”界面添加访问秘钥。
 
 图1 添加访问秘钥
 
@@ -49,11 +49,11 @@
 
 <img src="images/创建Notebook开发界面.PNG" width="800px" />
 
-**步骤 9**  &#160; &#160; 在Cell中填写数据转换代码，完整代码请参见<a href ="codes/data_format_conversion.py">data\_format\_conversion.py</a>，请根据数据集实际存储位置，修改脚本代码中的BASE_PATH 参数, 即步骤5中上传的train.json和test.json的OBS父目录，在执行数据转换代码前，请先执行以下代码：
+**步骤 9**  &#160; &#160; 在Cell中填写数据转换代码，完整代码请参见<a href ="codes/data_format_conversion.py">data\_format\_conversion.py</a>，请根据数据集实际存储位置，修改脚本代码中的BASE_PATH 参数(本例中为“s3://modelarts-example/datasets/”, 即步骤5中上传的train.json和test.json的OBS父目录，在执行数据转换代码前，请先执行以下代码：
 
 	import moxing.tensorflow as mox
 	import os
-    
+	
 	_S3_ACCESS_KEY_ID = os.environ.get('ACCESS_KEY_ID', None)                       
 	_S3_SECRET_ACCESS_KEY = os.environ.get('SECRET_ACCESS_KEY', None)
 	_endpoint='100.125.40.3'
@@ -62,12 +62,14 @@
 	os.environ['AWS_ACCESS_KEY_ID']=_S3_ACCESS_KEY_ID
 	os.environ['AWS_SECRET_ACCESS_KEY']=_S3_SECRET_ACCESS_KEY
 	os.environ['S3_ENDPOINT']=_endpoint
-	os.environ['S3_USE_HTTPS']='0'
+	os.environ['S3_USE_HTTPS']='1'
 	os.environ["S3_VERIFY_SSL"]='0'
 	mox.file.set_auth(ak=_S3_ACCESS_KEY_ID,sk=_S3_SECRET_ACCESS_KEY,server=_endpoint,port=None,
 	                     is_secure=_S3_USE_HTTPS,ssl_verify=_S3_VERIFY_SSL)
+	mox.file.set_auth(ssl_verify=False)
+	mox.file.set_auth(is_secure=False)
 
-**步骤 10**  &#160; &#160; 单击Cell上方的 ，运行代码（可能需要较长时间，若长时间没有执行结果，请尝试分段执行代码，将脚本分成多段放在不同的cell中执行，参见图4）。代码运行成功后，将在“s3://obs-testdata/iceberg/”目录下生成如下三个文件：
+**步骤 10**  &#160; &#160; 单击Cell上方的 ，运行代码（可能需要较长时间，若长时间没有执行结果，请尝试分段执行代码，将脚本分成多段放在不同的cell中执行，参见图4）。代码运行成功后，将在“s3://modelarts-example/datasets/”目录下生成如下三个文件：
 
 - iceberg-train-1176.tfrecord：训练数据集
 - iceberg-eval-295.tfrecord：验证数据集
@@ -80,7 +82,7 @@
 ### 2. 训练模型
 将模型训练脚本上传至OBS桶中（您也可以在ModelArts的开发环境中编写模型训练脚本，并转成py文件），然后创建训练作业进行模型训练，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将模型训练脚本文件<a href ="codes/train_iceberg.py">train\_iceberg.py</a>上传至华为云OBS桶 （假设OBS桶路径为：s3://automation/code/）。
+**步骤 1**  &#160; &#160; 参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将模型训练脚本文件<a href ="codes/train_iceberg.py">train\_iceberg.py</a>上传至华为云OBS桶 （假设OBS桶路径为：“s3://modelarts-example/codes/”）。
 
 **步骤 2**  &#160; &#160; 返回“ModelArts”控制台，在“训练作业”界面。 单击左上角的“创建”。
 
@@ -88,13 +90,13 @@
 
 <img src="images/训练作业界面.PNG" width="800px" />
 
-**步骤 3**  &#160; &#160; 填写参数。“名称”和“描述”可以随意填写，“数据来源”请选择“数据的存储位置”，“算法来源”请选择“常用框架”，“AI引擎”选择“TensorFlow"，“代码目录”请选择型训练脚本文件train\_iceberg.py所在的OBS父目录，“启动文件”请选择“train\_iceberg.py”，“训练输出位置”请选择一个路径（建议新建一个文件夹）用于保存输出模型和预测文件，参数确认无误后，单击“立即创建”，完成训练作业创建。
+**步骤 3**  &#160; &#160; 填写参数。“名称”和“描述”可以随意填写，“数据来源”请选择“数据的存储位置”(本例中为s3://modelarts-example/datasets/)，“算法来源”请选择“常用框架”，“AI引擎”选择“TensorFlow"，“代码目录”请选择型训练脚本文件train\_iceberg.py所在的OBS父目录（“s3://modelarts-example/codes/”），“启动文件”请选择“train\_iceberg.py”，“训练输出位置”请选择一个路径（例如“s3://modelarts-example/log/”）用于保存输出模型和预测文件，参数确认无误后，单击“立即创建”，完成训练作业创建。
 
 图6 训练作业参数配置
 
 <img src="images/训练作业参数配置.PNG" width="800px" />
 
-**步骤 4**  &#160; &#160; 在模型训练的过程中或者完成后，可以通过创建TensorBoard作业查看一些参数的统计信息，如loss，accuracy等。在“训练作业”界面，点击TensorBoard，再点击“创建”按钮，参数“名称”可随意填写，“日志路径”请选择步骤3中“训练输出位置”参数中的路径。
+**步骤 4**  &#160; &#160; 在模型训练的过程中或者完成后，可以通过创建TensorBoard作业查看一些参数的统计信息，如loss，accuracy等。在“训练作业”界面，点击TensorBoard，再点击“创建”按钮，参数“名称”可随意填写，“日志路径”请选择步骤3中“训练输出位置”参数中的路径（“s3://modelarts-example/log/”）。
 
 图7 创建tensorboard
 
@@ -105,15 +107,15 @@
 ### 3. 预测结果
 待训练作业运行完成后，在“训练输出位置”目录下生成模型文件（如：model.ckpt-5600）。由于我们只需要进行一次预测，因此不需要部署在线预测服务。相关的预测操作已经在“train_iceberg.py”文件写好，预测结果将输出到“submission.csv”文件。我们使用训练作业进行预测，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 参考“2.训练模型”在“训练作业”界面，单击左上角的“创建”。
+**步骤 1**  &#160; &#160; 参考“**2.训练模型**”在“训练作业”界面，单击左上角的“创建”。
 
-**步骤 2**  &#160; &#160; 填写参数，参考“2.训练模型 步骤3”填写参数，“训练输出位置”请保持一致，预测‘计算节点个数’只能选择1个节点，另外添加参数“is_training=False”单击“立即创建”，完成训练作业创建。
+**步骤 2**  &#160; &#160; 填写参数，参考“**2.训练模型 步骤3**”填写参数，“训练输出位置”请保持一致(“s3://modelarts-example/log/”)，预测时‘计算节点个数’只能选择1个节点，务必添加参数“is_training=False”，单击“立即创建”，完成训练作业创建。
 
 图8 预测
 
 <img src="images/训练作业参数配置（预测）.PNG" width="800px" />
 
-**步骤 3**  &#160; &#160; 训练作业执行完成后，在“训练作业”界面，单击iceberg_predict作业名称，进入作业的详情界面。在“训练日志”中，可以查看到在eval数据集上的loss值。在“训练输出位置”目录下，能看到用于保存预测结果的“submission.csv”文件。
+**步骤 3**  &#160; &#160; 训练作业执行完成后，在“训练作业”界面，单击iceberg_predict作业名称，进入作业的详情界面。在“训练日志”中，可以查看到在eval数据集上的loss值。在“训练输出位置”目录下（“s3://modelarts-example/log/”），能看到用于保存预测结果的“submission.csv”文件。
 
 ### 4. 提交预测结果
 登录Kaggle官网，将“submission.csv”文件提交到Kaggle上，得到预测结果的准确率（错误率）。
