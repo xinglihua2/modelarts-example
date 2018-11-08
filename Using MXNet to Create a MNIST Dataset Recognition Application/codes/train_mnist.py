@@ -6,8 +6,15 @@ import os
 def get_mnist_iter(args):
     train_image = os.path.join(args.data_url + 'train-images-idx3-ubyte')
     train_label = os.path.join(args.data_url + 'train-labels-idx1-ubyte')
-    assert mox.file.exists(train_image), 'train-images-idx3-ubyte file is not exist,please check your data url'
-    assert mox.file.exists(train_label), 'train-images-idx1-ubyte file is not exist,please check your data url'
+    try:
+        import moxing.mxnet as mox
+    except:
+        os.path.exists('s3://obs-lpf/data/mnist/train-images-idx3-ubyte')
+        os.path.exists('s3://obs-lpf/data/mnist/train-labels-idx1-ubyte')
+    else:
+        mox.file.exists('s3://obs-lpf/data/mnist/train-images-idx3-ubyte')
+        mox.file.exists('s3://obs-lpf/data/mnist/train-labels-idx1-ubyte')
+
     train = mx.io.MNISTIter(image=train_image,
                             label=train_lable,
                             data_shape=(1, 28, 28),
