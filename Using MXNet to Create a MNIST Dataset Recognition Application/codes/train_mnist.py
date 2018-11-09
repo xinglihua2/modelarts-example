@@ -16,7 +16,7 @@ def get_mnist_iter(args):
         assert mox.file.exists(train_image), 'file train-labels.idx1-ubyte is not exist,please check your data url'
 
     train = mx.io.MNISTIter(image=train_image,
-                            label=train_lable,
+                            label=train_label,
                             data_shape=(1, 28, 28),
                             batch_size=args.batch_size,
                             shuffle=True,
