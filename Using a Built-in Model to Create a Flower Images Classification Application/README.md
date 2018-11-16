@@ -1,11 +1,12 @@
 # 使用预置模型实现花卉图像分类应用
-如果是第一次使用ModelArts服务，在使用之前需要给服务添加访问密钥。可参考样例里的<a href="https://github.com/CalvinXKY/modelarts-example/blob/master/Using%20ModelArts%20to%20Create%20a%20Yunbao%20Detection%20Model/README.md">“服务配置”</a>。
+
 本文介绍在华为云ModelArts平台如何使用flowers数据集对预置的ResNet_v1\_50模型进行重训练，快速构建花卉图像分类应用。操作步骤分为4部分，分别是：
 
 1.	**准备数据**：在ModelArts市场预置数据集中找到自动学习对应的flowers训练集，并根据该原始数据集生成自动学习可处理的数据集。。
 2.	**训练模型**：使用flowers训练集，对ResNet_v1\_50模型重训练，得到新模型。
 3.	**部署模型**：将得到的模型，部署为在线预测服务。
 4.	**发起预测请求**：发起预测请求获取请求结果。
+  注：如果是第一次使用ModelArts服务，在使用之前需要给服务添加访问密钥。可参考样例里的<a href="https://github.com/CalvinXKY/modelarts-example/blob/master/Using%20ModelArts%20to%20Create%20a%20Yunbao%20Detection%20Model/README.md">“服务配置”</a>。
 ### 1. 准备数据
 通过ModelArts市场预置数据集创建自动学习所需数据集版本，操作步骤如下：
 
