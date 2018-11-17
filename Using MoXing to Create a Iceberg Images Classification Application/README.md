@@ -100,7 +100,7 @@
 
 图8 训练作业界面
 
-<img src="images/训练作业界面.PNG" width="800px" />
+<img src="images/训练作业界面.PNG" width="1000px" />
 
 **步骤 3**  &#160; &#160; 填写参数。“名称”和“描述”可以随意填写，“数据来源”请选择“数据的存储位置”(本例中为s3://iceberg-data-set-910395ae-258c-430e-8f54-2015b19a711c/iceberg/)，“算法来源”请选择“常用框架”，“AI引擎”选择“TensorFlow"，“代码目录”请选择型训练脚本文件train\_iceberg.py所在的OBS父目录（“s3://modelarts-obs/iceberg/iceberg_code/”），“启动文件”请选择“train\_iceberg.py”，“训练输出位置”请选择一个路径（例如“s3://modelarts-obs/iceberg/iceberg_log/”）用于保存输出模型和预测文件，参数确认无误后，单击“立即创建”，完成训练作业创建。
 
@@ -112,7 +112,7 @@
 
 图10 创建tensorboard
 
-<img src="images/创建tensorboard.PNG" width="800px" />
+<img src="images/创建tensorboard.PNG" width="1000px" />
 
 图11 创建tensorboard参数配置
 
