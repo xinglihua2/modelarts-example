@@ -21,7 +21,7 @@
 
 如图2 数据详情页面
 
-<img src="images/导入数据集.PNG" width="800px" />
+<img src="images/导入数据集.PNG" width="1000px" />
 
 **步骤 4**  &#160; &#160; 在“数据管理>数据集”页面查看直到数据集（Iceberg-Data-Set）创建完成，数据详细信息完全加载。
 
@@ -29,7 +29,7 @@
 
 图3 数据集桶信息
 
-<img src="images/数据集.PNG" width="800px" />
+<img src="images/数据集.PNG" width="1000px" />
 
 其中，训练集train.json包含4类数据：band\_1、band\_2、inc\_angle和is_iceberg（测试集），分别是：
 
