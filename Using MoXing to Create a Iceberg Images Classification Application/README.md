@@ -105,17 +105,23 @@
 
 <img src="images/训练作业参数.jpg" width="800px" />
 
-**步骤 4**  &#160; &#160; 在模型训练的过程中或者完成后，可以通过创建TensorBoard作业查看一些参数的统计信息，如loss，accuracy等。在“训练作业”界面，点击TensorBoard，再点击“创建”按钮，参数“名称”可随意填写，“日志路径”请选择步骤3中“训练输出位置”参数中的路径（“s3://modelarts-obs/iceberg_log/”）。
+**步骤 4**  &#160; &#160; 在模型训练的过程中或者完成后，可以通过创建TensorBoard作业查看一些参数的统计信息，如loss，accuracy等。在“训练作业”界面，点击TensorBoard，再点击“创建”按钮，参数“名称”可随意填写，“日志路径”请选择步骤3中“训练输出位置”参数中的路径（“s3://modelarts-obs/iceberg_log/”），参见图10、11。
 
 图10 创建tensorboard
 
 <img src="images/创建tensorboard.PNG" width="800px" />
 
-**步骤 5** 训练作业完成后，即完成了模型训练过程。如有问题，可点击作业名称，进入作业详情界面查看训练作业日志信息。训练作业完成详情参见图11.
+图11 创建tensorboard参数配置
 
-图11 训练作业已完成
+<img src="images/tensorboard参数.PNG" width="800px" />
 
-<img src="images/创建tensorboard.PNG" width="800px" />
+**步骤 5** 训练作业完成后，即完成了模型训练过程。如有问题，可点击作业名称，进入作业详情界面查看训练作业日志信息。训练作业完成详情参见图12.
+
+图12 训练作业已完成
+
+<img src="images/训练作业完成.PNG" width="800px" />
+
+
 
 
 
