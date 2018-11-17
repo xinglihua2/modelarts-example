@@ -2,14 +2,14 @@
 
 本文介绍如何在华为云ModelArts平台上使用MoXing实现Kaggle竞赛中的冰山图像分类任务。实验所使用的图像为雷达图像，需要参赛者利用算法识别出图像中是冰山（iceberg）还是船（ship）。操作的流程分为4部分，分别是：
 
-1.	**准备数据**：下载数据集并上传至华为云OBS桶中，编写代码将数据集格式转换成TFRecord。
+1.	**准备数据**：在ModelArts市场预置数据集中找到本实验对应的数据集，编写代码将数据集格式转换成TFRecord。
 3.	**训练模型**：使用MoXing API编写用实现冰山图像分类的网络模型，新建训练作业进行模型训练。
 4.	**预测结果**：再次新建训练作业，对test数据集进行预测，并将结果保存到csv文件。
-5.	**查看结果**：将预测结果的csv文件提交到Kaggle官网后获取分类结果。
+5.	**查看结果**：查看csv文件中的预测结果。
 ### 1. 准备数据
-首先登陆Kaggle官网，下载冰山图像分类数据集并上传至华为云OBS桶中。然后通过华为云ModelArts在线IDE将数据集格式转换成TFRecord格式，操作步骤如下：
+在ModelArts市场预置数据集中找到本实验对应的数据集，然后通过华为云ModelArts在线IDE将数据集格式转换成TFRecord格式，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 登录<a href="https://www.kaggle.com/competitions">Kaggle官网</a>，注册并登录账号。
+**步骤 1**  &#160; &#160; 登录<a href="https://console.huaweicloud.com/modelarts/?agencyId=8273bfe4984c4510ab374530dfdeee8e&region=cn-north-1&locale=zh-cn#/manage/dashboard">"ModelArts"</a>，管理控制台，单击左侧导航栏的"市场"。
 
 **步骤 2**  &#160; &#160; 选择<a href = "https://www.kaggle.com/c/statoil-iceberg-classifier-challenge">“Statoil/C-CORE Iceberg Classifier Challenge”</a>，进入冰山识别任务简介页面。
 
