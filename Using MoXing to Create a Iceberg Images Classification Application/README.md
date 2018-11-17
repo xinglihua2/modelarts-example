@@ -54,7 +54,7 @@
 
 图6 创建Notebook开发界面
 
-<img src="images/创建Notebook开发界面.PNG" width="800px" />
+<img src="images/创建Notebook开发界面.PNG" width="1000px" />
 
 **步骤 9**  &#160; &#160; 在Cell中填写数据转换代码，完整代码请参见<a href ="codes/data_format_conversion.py">data\_format\_conversion.py</a>，请根据数据集实际存储位置，修改脚本代码中的BASE_PATH 参数(本例中为“s3://iceberg-data-set-910395ae-258c-430e-8f54-2015b19a711c/iceberg/”, 即train.json和test.json的OBS父目录，在执行数据转换代码前，请先执行以下代码：
 
@@ -85,7 +85,7 @@
 
 图7 脚本分段执行
 
-<img src="images/分段执行.PNG" width="800px" />
+<img src="images/分段执行.PNG" width="1000px" />
 
 **注意**
 **做完后，删除该开发环境。**
