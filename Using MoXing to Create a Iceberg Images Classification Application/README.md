@@ -89,13 +89,40 @@
 
 ### 2. 训练模型
 
+将模型训练脚本上传至OBS桶中（您也可以在ModelArts的开发环境中编写模型训练脚本，并转成py文件），然后创建训练作业进行模型训练，操作步骤如下：
+
+**步骤 1**  &#160; &#160; 参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将模型训练脚本文件<a href ="codes/train_iceberg.py">train\_iceberg.py</a>上传至华为云OBS桶 （假设OBS桶路径为：“s3://modelarts-obs/iceberg_code/”）。
+
+**步骤 2**  &#160; &#160; 返回<a href="https://console.huaweicloud.com/modelarts/?agencyId=8273bfe4984c4510ab374530dfdeee8e&region=cn-north-1&locale=zh-cn#/manage/dashboard">"ModelArts"</a>控制台，在“训练作业”界面。 单击左上角的“创建”。
+
+图8 训练作业界面
+
+<img src="images/训练作业界面.PNG" width="800px" />
+
+**步骤 3**  &#160; &#160; 填写参数。“名称”和“描述”可以随意填写，“数据来源”请选择“数据的存储位置”(本例中为s3://iceberg-data-set-910395ae-258c-430e-8f54-2015b19a711c/iceberg/)，“算法来源”请选择“常用框架”，“AI引擎”选择“TensorFlow"，“代码目录”请选择型训练脚本文件train\_iceberg.py所在的OBS父目录（“s3://modelarts-obs/iceberg_code/”），“启动文件”请选择“train\_iceberg.py”，“训练输出位置”请选择一个路径（例如“s3://modelarts-obs/iceberg_log/”）用于保存输出模型和预测文件，参数确认无误后，单击“立即创建”，完成训练作业创建。
+
+图9 训练作业参数配置
+
+<img src="images/训练作业参数.jpg" width="800px" />
+
+**步骤 4**  &#160; &#160; 在模型训练的过程中或者完成后，可以通过创建TensorBoard作业查看一些参数的统计信息，如loss，accuracy等。在“训练作业”界面，点击TensorBoard，再点击“创建”按钮，参数“名称”可随意填写，“日志路径”请选择步骤3中“训练输出位置”参数中的路径（“s3://modelarts-obs/iceberg_log/”）。
+
+图10 创建tensorboard
+
+<img src="images/创建tensorboard.PNG" width="800px" />
+
+**步骤 5** 训练作业完成后，即完成了模型训练过程。如有问题，可点击作业名称，进入作业详情界面查看训练作业日志信息。训练作业完成详情参见图11.
+
+图11 训练作业已完成
+
+<img src="images/创建tensorboard.PNG" width="800px" />
 
 
 
 
 
 
-
+============================================================================================================
 **步骤 4**  &#160; &#160; 下载数据集后，解压训练集和预测集，得到train.json和test.json（该格式可以通过pandas.read_json进行读取）。
 
 其中，训练集train.json包含4类数据：band\_1、band\_2、inc\_angle和is_iceberg（测试集），分别是：
