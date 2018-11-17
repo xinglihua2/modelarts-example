@@ -85,9 +85,7 @@
 
 图7 脚本分段执行
 
-<img src="images/脚本分段2.JPG" width="800px" />
-
-<img src="images/脚本分段3.JPG" width="800px" />
+<img src="images/分段执行.PNG" width="800px" />
 
 ### 2. 训练模型
 
