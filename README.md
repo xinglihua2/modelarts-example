@@ -2,7 +2,7 @@
 
 ###  **案例 1**  &#160; &#160;[Using MXNet to Create a MNIST Dataset Recognition Application](https://github.com/huawei-clouds/modelarts-example/tree/master/Using%20MXNet%20to%20Create%20a%20MNIST%20Dataset%20Recognition%20Application)
 
-本案例介绍在“[华为云ModelArts](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/dashboard)”平台如何使用MXNet实现MNIST数据集的手写数字图像识别应用。通过进入ModelArts平台的“**[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)**” 界面创建训练作业，完成模型训练，之后 “[导入模型](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/models)”，“[部署上线](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/webservice/real-time)”，发起预测请求完成预测。
+本案例介绍在“[华为云ModelArts](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/dashboard)”平台如何使用MXNet实现MNIST数据集的手写数字图像识别应用。通过进入ModelArts平台的“[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)” 界面创建训练作业，完成模型训练，之后 “[导入模型](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/models)”，“[部署上线](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/webservice/real-time)”，发起预测请求完成预测。
 
 基本流程包含以下步骤：
 
@@ -25,7 +25,7 @@
 
 ###  **案例 3**  &#160; &#160;[Using MoXing to Create a MNIST Dataset Recognition Application](https://github.com/huawei-clouds/modelarts-example/tree/master/Using%20MoXing%20to%20Create%20a%20MNIST%20Dataset%20Recognition%20Application)
 
-本案例介绍在“[华为云ModelArts](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/dashboard)”平台如何使用MoXing实现MNIST数据集的手写数字图像识别应用。通过进入ModelArts平台的“**[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)**” 界面创建训练作业，完成模型训练，之后 “[导入模型](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/models)”，“[部署上线](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/webservice/real-time)”，发起预测请求完成预测。
+本案例介绍在“[华为云ModelArts](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/dashboard)”平台如何使用MoXing实现MNIST数据集的手写数字图像识别应用。通过进入ModelArts平台的“[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)” 界面创建训练作业，完成模型训练，之后 “[导入模型](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/models)”，“[部署上线](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/webservice/real-time)”，发起预测请求完成预测。
 
 基本流程包含以下步骤：
 
@@ -55,7 +55,7 @@
 
 ###  **案例 6**  &#160; &#160;[Using Spark MLlib to Create a Precise Recommendation Application](https://github.com/huawei-clouds/modelarts-example/tree/master/Using%20Spark%20MLlib%20to%20Create%20a%20Precise%20Recommendation%20Application)
 
-本案例介绍如何借助华为云ModelArts服务平台上的自动学习场景，为您提供精准营销的方向和辅助决策，提升消费品转化率和商家利润，改善消费者的消费体验。通过进入ModelArts平台的“**[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)**” 界面创建训练作业，完成模型训练，之后 “[导入模型](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/models)”，“[部署上线](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/webservice/real-time)”，发起预测请求完成预测。
+本案例介绍如何借助华为云ModelArts服务平台上的自动学习场景，为您提供精准营销的方向和辅助决策，提升消费品转化率和商家利润，改善消费者的消费体验。通过进入ModelArts平台的“[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)” 界面创建训练作业，完成模型训练，之后 “[导入模型](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/models)”，“[部署上线](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/webservice/real-time)”，发起预测请求完成预测。
 
 
 基本流程包含以下步骤：
@@ -67,7 +67,7 @@
 
 ###  **案例 7**  &#160; &#160;[Using a Built-in Model to Create a Flower Images Classification Application](https://github.com/huawei-clouds/modelarts-example/tree/master/Using%20a%20Built-in%20Model%20to%20Create%20a%20Flower%20Images%20Classification%20Application)
 
-本案例介绍在华为云ModelArts平台如何使用flowers数据集对预置的ResNet\_v1\_50模型进行重训练，快速构建花卉图像分类应用。通过使用ModelArts平台的“**[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)**” 界面的“预置算法”功能创建训练作业，完成模型训练，之后 “[导入模型](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/models)”，“[部署上线](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/webservice/real-time)”，发起预测请求完成预测。
+本案例介绍在华为云ModelArts平台如何使用flowers数据集对预置的ResNet\_v1\_50模型进行重训练，快速构建花卉图像分类应用。通过使用ModelArts平台的“[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)” 界面的“预置算法”功能创建训练作业，完成模型训练，之后 “[导入模型](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/models)”，“[部署上线](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/webservice/real-time)”，发起预测请求完成预测。
 
 
 基本流程包含以下步骤：
