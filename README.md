@@ -36,7 +36,7 @@
 
 ###  **案例 4**  &#160; &#160;[Using ModelArts to Create a Bank Marketing Application](https://github.com/huawei-clouds/modelarts-example/tree/master/Using%20ModelArts%20to%20Create%20a%20Bank%20Marketing%20Application)
 
-本案例介绍在“[华为云ModelArts](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/dashboard)”平台如何根据客户特征（年龄、工作类型、婚姻状况、文化程度、是否有房贷和是否有个人贷款），预测客户是否愿意办理定期存款业务。通过进入ModelArts平台的“[自动学习](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/autoML)”界面创建“预测分析模型”并启动"训练作业"。训练作业运行完成后，即可发布模型成预测服务。
+本案例介绍在“[华为云ModelArts](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/dashboard)”平台如何根据客户特征（年龄、工作类型、婚姻状况、文化程度、是否有房贷和是否有个人贷款），预测客户是否愿意办理定期存款业务。通过进入ModelArts平台的“[自动学习](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/autoML)”界面创建“**预测分析模型**”并启动"训练作业"。训练作业运行完成后，即可发布模型成预测服务。
 
 基本流程包含以下步骤：
 
@@ -46,7 +46,7 @@
 
 ###  **案例 5**  &#160; &#160;[Using ModelArts to Create a Yunbao Detection Model](https://github.com/huawei-clouds/modelarts-example/tree/master/Using%20ModelArts%20to%20Create%20a%20Yunbao%20Detection%20Model)
 
-聪明可爱的“云宝”是华为云的吉祥物。本样例将详细介绍怎样用自动学习方法和预置算法快速生成云宝检测模型。通过进入ModelArts平台的“[自动学习](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/autoML)”界面，使用自动学习功能，智能生成“云宝”检测模型；以及使用ModelArts平台的“[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)”界面的“预置算法”功能生成“云宝”检测模型。
+聪明可爱的“云宝”是华为云的吉祥物。本样例将详细介绍怎样用自动学习方法和预置算法快速生成云宝检测模型。通过使用ModelArts平台的“[自动学习](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/autoML)”界面的“**物体检测**”功能，智能生成“云宝”检测模型；以及使用ModelArts平台的“[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)”界面的“**预置算法**”功能生成“云宝”检测模型。
 
 基本流程包含以下步骤：
 
@@ -67,7 +67,7 @@
 
 ###  **案例 7**  &#160; &#160;[Using a Built-in Model to Create a Flower Images Classification Application](https://github.com/huawei-clouds/modelarts-example/tree/master/Using%20a%20Built-in%20Model%20to%20Create%20a%20Flower%20Images%20Classification%20Application)
 
-本案例介绍在华为云ModelArts平台如何使用flowers数据集对预置的ResNet\_v1\_50模型进行重训练，快速构建花卉图像分类应用。通过使用ModelArts平台的“[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)” 界面的“预置算法”功能创建训练作业，完成模型训练，之后 “[导入模型](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/models)”，“[部署上线](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/webservice/real-time)”，发起预测请求完成预测。
+本案例介绍在华为云ModelArts平台如何使用flowers数据集对预置的ResNet\_v1\_50模型进行重训练，快速构建花卉图像分类应用。通过使用ModelArts平台的“[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)” 界面的“**预置算法**”功能创建训练作业，完成模型训练，之后 “[导入模型](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/models)”，“[部署上线](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/webservice/real-time)”，发起预测请求完成预测。
 
 
 基本流程包含以下步骤：
@@ -76,8 +76,3 @@
 2. **训练模型**：使用flowers训练集，对ResNet_v1_50模型重训练，得到新模型。
 3. **部署模型**：将得到的模型，部署为在线预测服务。
 4. **发起预测请求**：发起预测请求获取请求结果。
-
-
-
-
-
