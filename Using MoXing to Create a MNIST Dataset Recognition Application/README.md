@@ -35,9 +35,9 @@
 ### 2. 训练模型
 接下来，要编写模型训练脚本代码（本案例中已编写好了训练脚本），并完成模型训练，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 下载模型训练脚本文件<a href ="codes/train_mnist.py">train\_mnist.py</a>。参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将脚本文件上传至华为云OBS桶 （假设OBS桶路径为：s3://modelarts-example/codes/）。
+**步骤 1**  &#160; &#160; 下载模型训练脚本文件<a href ="codes/train_mnist.py">train\_mnist.py</a>。参考<a href="https://support.huaweicloud.com/usermanual-dls/dls_01_0040.html">“上传业务数据”</a>章节内容，将脚本文件上传至华为云OBS桶 （假设OBS桶路径为：/modelarts-example/codes/）。
 
-**步骤 2**  &#160; &#160; 在“训练作业”界面，单击左上角的“创建”, “名称”和“描述”可以随意填写；“数据来源”请选择“数据的存储位置”(本例中为s3://mnist-data-set-a77f4041-f4e9-4297-8038-8dfc3457ac16/mnist)；“算法来源”请选择“常用框架”，“AI引擎”选择“TensorFlow"；“代码目录”请选择型训练脚本文件train\_mnist.py所在的OBS父目录（s3://modelarts-example/codes/）；“启动文件”请选择“train\_mnist.py”；“训练输出位置”请选择一个路径（例如s3://modelarts-example/log/）用于保存输出模型和预测文件，参考下图填写训练作业参数.
+**步骤 2**  &#160; &#160; 在“训练作业”界面，单击左上角的“创建”, “名称”和“描述”可以随意填写；“数据来源”请选择“数据集”Mnist-Data-Set{或者“数据的存储位置”(本例中为/mnist-data-set-a77f4041-f4e9-4297-8038-8dfc3457ac16/mnist)}；“算法来源”请选择“常用框架”，“AI引擎”选择“TensorFlow"；“代码目录”请选择型训练脚本文件train\_mnist.py所在的OBS父目录（/modelarts-example/codes/）；“启动文件”请选择“train\_mnist.py”；“训练输出位置”请选择一个路径（例如/modelarts-example/log/）用于保存输出模型和预测文件，参考下图填写训练作业参数.
 
 图3 训练作业参数配置（训练）
 
@@ -45,7 +45,7 @@
 
 **步骤 3**  &#160; &#160;  参数确认无误后，单击“立即创建”，完成训练作业创建。
 
-**步骤 4**  &#160; &#160; 在模型训练的过程中或者完成后，通过创建TensorBoard作业查看一些参数的统计信息，如loss， accuracy等。在“训练作业”界面，点击TensorBoard，再点击“创建”按钮，参数“名称”可随意填写，“日志路径”请选择步骤3中“训练输出位置”参数中的路径（s3://modelarts-example/log/）。
+**步骤 4**  &#160; &#160; 在模型训练的过程中或者完成后，通过创建TensorBoard作业查看一些参数的统计信息，如loss， accuracy等。在“训练作业”界面，点击TensorBoard，再点击“创建”按钮，参数“名称”可随意填写，“日志路径”请选择步骤3中“训练输出位置”参数中的路径（/modelarts-example/log/）。
 
 图4 创建tensorboard
 
@@ -58,7 +58,7 @@
 
 模型训练完成后，可以创建预测作业，将模型部署为在线预测服务，操作步骤如下：
 
-**步骤 1**  &#160; &#160; 在“模型管理”界面，单击左上角的“导入”，参考下图填写参数。名称可随意填写，“元模型来源”选择“指定元模型位置”，“选择元模型”的路径与训练模型中“训练输出位置”保持一致（s3://modelarts-example/log/），“AI引擎”选择“TensorFlow”。推理代码参考codes/customized_converter.py ，并上传到s3://modelarts-example/codes/目录下。
+**步骤 1**  &#160; &#160; 在“模型管理”界面，单击左上角的“导入”，参考下图填写参数。名称可随意填写，“元模型来源”选择“指定元模型位置”，“选择元模型”的路径与训练模型中“训练输出位置”保持一致（/modelarts-example/log/），“AI引擎”选择“TensorFlow”。推理代码参考codes/customized_converter.py ，并上传到/modelarts-example/codes/目录下。
 
 图5 导入模型参数配置
 
