@@ -13,7 +13,7 @@
 
 ###  **案例 2**  &#160; &#160;[Using MoXing to Create a Iceberg Images Classification Application](https://github.com/huawei-clouds/modelarts-example/tree/master/Using%20MoXing%20to%20Create%20a%20Iceberg%20Images%20Classification%20Application)
 
-本案例介绍在介绍如何在“[华为云ModelArts](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/dashboard)”平台上使用MoXing实现Kaggle竞赛中的冰山图像分类任务。实验所使用的图像为雷达图像，需要参赛者利用算法识别出图像中是冰山（iceberg）还是船（ship）。通过进入ModelArts平台的“[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)”界面创建训练作业，完成模型训练，之后创建一个预测作业，加载模型参数，获取预测结果。
+本案例介绍如何在“[华为云ModelArts](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/dashboard)”平台上使用MoXing实现Kaggle竞赛中的冰山图像分类任务。实验所使用的图像为雷达图像，需要参赛者利用算法识别出图像中是冰山（iceberg）还是船（ship）。通过进入ModelArts平台的“[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)”界面创建训练作业，完成模型训练，之后创建一个预测作业，加载模型参数，获取预测结果。
 
 基本流程包含以下步骤：
 
@@ -76,3 +76,14 @@
 2. **训练模型**：使用flowers训练集，对ResNet_v1_50模型重训练，得到新模型。
 3. **部署模型**：将得到的模型，部署为在线预测服务。
 4. **发起预测请求**：发起预测请求获取请求结果。
+
+
+###  **案例 8**  &#160; &#160;Using TensorFlow to Create a MNIST Dataset Recognition Application
+
+本案例介绍如何在“[华为云ModelArts](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/dashboard)”平台上使用TensorFlow实现MNIST数据集的手写数字图像识别应用。通过进入ModelArts平台的“[训练作业](https://console.huaweicloud.com/modelarts/?region=cn-north-1#/manage/trainingjobs/)”界面创建训练作业，完成模型训练，之后创建一个预测作业，加载模型参数，获取预测结果。
+
+基本流程包含以下步骤：
+
+1. **准备数据**：通过ModelArts市场预置数据集创建所需数据集版本。
+2. **训练模型**：使用TensorFlow框架编模型训练脚本，新建训练作业进行模型训练。
+3. **预测结果**：得到训练好的模型文件后，新建训练作业对test数据集进行预测，并输出预测结果。
