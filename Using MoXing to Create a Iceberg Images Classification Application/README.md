@@ -25,7 +25,7 @@
 
 **步骤 4**  &#160; &#160; 在“数据管理>数据集”页面查看直到数据集（Iceberg-Data-Set）创建完成，数据详细信息完全加载。
 
-**步骤 5**  &#160; &#160;  在数据集目录页面获取创建的冰山图像分类数据集的桶信息iceberg-data-set-910395ae-258c-430e-8f54-2015b19a711c。请参考图3。
+**步骤 5**  &#160; &#160;  在数据集目录页面获取创建的冰山图像分类数据集的桶信息iceberg-data-set-d91cb8a8-5d46-4101-94d7-3f99391d6fb7/iceberg。请参考图3。
 
 图3 数据集桶信息
 
@@ -56,7 +56,7 @@
 
 <img src="images/创建Notebook开发界面.PNG" width="1000px" />
 
-**步骤 9**  &#160; &#160; 在Cell中填写数据转换代码，完整代码请参见<a href ="codes/data_format_conversion.py">data\_format\_conversion.py</a>，请根据数据集实际存储位置，修改脚本代码中的BASE_PATH 参数(本例中为“s3://iceberg-data-set-910395ae-258c-430e-8f54-2015b19a711c/iceberg/”, 即train.json和test.json的OBS父目录，在执行数据转换代码前，请先执行以下代码：
+**步骤 9**  &#160; &#160; 在Cell中填写数据转换代码，完整代码请参见<a href ="codes/data_format_conversion.py">data\_format\_conversion.py</a>，请根据数据集实际存储位置，修改脚本代码中的BASE_PATH 参数(本例中为“s3://iceberg-data-set-d91cb8a8-5d46-4101-94d7-3f99391d6fb7/iceberg/”, 即train.json和test.json的OBS父目录，在执行数据转换代码前，请先执行以下代码：
 
 	import moxing.tensorflow as mox
 	import os
@@ -77,7 +77,7 @@
 	mox.file.set_auth(is_secure=False)
 
 
-**步骤 10**  &#160; &#160; 单击Cell上方的 ，运行代码（可能需要较长时间，若长时间没有执行结果，请尝试分段执行代码，将脚本分成多段放在不同的cell中执行，参见图7）。代码运行成功后，将在“s3://iceberg-data-set-910395ae-258c-430e-8f54-2015b19a711c/iceberg/”目录下生成如下三个文件：
+**步骤 10**  &#160; &#160; 单击Cell上方的 ，运行代码（可能需要较长时间，若长时间没有执行结果，请尝试分段执行代码，将脚本分成多段放在不同的cell中执行，参见图7）。代码运行成功后，将在“s3://iceberg-data-set-d91cb8a8-5d46-4101-94d7-3f99391d6fb7/iceberg/”目录下生成如下三个文件：
 
 - iceberg-train-1176.tfrecord：训练数据集
 - iceberg-eval-295.tfrecord：验证数据集
@@ -102,7 +102,7 @@
 
 <img src="images/训练作业界面.PNG" width="1000px" />
 
-**步骤 3**  &#160; &#160; 填写参数。“名称”和“描述”可以随意填写，“数据来源”请选择“数据的存储位置”(本例中为s3://iceberg-data-set-910395ae-258c-430e-8f54-2015b19a711c/iceberg/)，“算法来源”请选择“常用框架”，“AI引擎”选择“TensorFlow"，“代码目录”请选择型训练脚本文件train\_iceberg.py所在的OBS父目录（“s3://modelarts-obs/iceberg/iceberg_code/”），“启动文件”请选择“train\_iceberg.py”，“训练输出位置”请选择一个路径（例如“s3://modelarts-obs/iceberg/iceberg_log/”）用于保存输出模型和预测文件，参数确认无误后，单击“立即创建”，完成训练作业创建。
+**步骤 3**  &#160; &#160; 填写参数。“名称”和“描述”可以随意填写，“数据来源”请选择“数据的存储位置”(本例中为s3://iceberg-data-set-d91cb8a8-5d46-4101-94d7-3f99391d6fb7/iceberg/)，“算法来源”请选择“常用框架”，“AI引擎”选择“TensorFlow"，“代码目录”请选择型训练脚本文件train\_iceberg.py所在的OBS父目录（“s3://modelarts-obs/iceberg/iceberg_code/”），“启动文件”请选择“train\_iceberg.py”，“训练输出位置”请选择一个路径（例如“s3://modelarts-obs/iceberg/iceberg_log/”）用于保存输出模型和预测文件，参数确认无误后，单击“立即创建”，完成训练作业创建。
 
 图9 训练作业参数配置
 
