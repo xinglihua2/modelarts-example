@@ -29,7 +29,7 @@
 
 图3 数据集桶信息
 
-<img src="images/数据集.PNG" width="1000px" />
+<img src="images/数据集桶信息.PNG" width="1000px" />
 
 其中，训练集train.json包含4类数据：band\_1、band\_2、inc\_angle和is_iceberg（测试集），分别是：
 
