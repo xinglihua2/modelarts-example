@@ -123,6 +123,7 @@
 图12 训练作业完成
 
 <img src="images/训练作业完成.PNG" width="800px" />
+<img src="images/训练作业完成日志.PNG" width="800px" />
 
 **注意：**
 
@@ -144,6 +145,7 @@
 图14 预测结果详情
 
 <img src="images/预测结果详情.PNG" width="800px" />
+<img src="images/预测结果详情日志.PNG" width="800px" />
 
 **注意：**
 
