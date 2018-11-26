@@ -138,7 +138,7 @@
 
 图13 训练作业-预测
 
-<img src="images/训练作业-预测.PNG" width="800px" />
+<img src="images/训练作业预测.jpg" width="800px" />
 
 **步骤 3**  &#160; &#160; 训练作业执行完成后，在“训练作业”界面，单击iceberg_predict作业名称，进入作业的详情界面。在“训练日志”中，可以查看到在eval数据集上的loss值。
 
