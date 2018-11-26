@@ -156,6 +156,6 @@
 
 图15 结果
 
-<img src="images/结果.PNG" width="600px" />
+<img src="images/结果.PNG" width="300px" />
 
 
