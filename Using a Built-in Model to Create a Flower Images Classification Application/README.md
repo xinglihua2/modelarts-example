@@ -38,7 +38,7 @@
 
 图2 训练作业的参数配置
 
-<img src="images/训练作业参数配置.PNG" width="800px" />
+<img src="images/训练作业参数配置new.png" width="800px" />
 
 
 **步骤 3**&#160; &#160; 在模型训练的过程中或者完成后，通过创建TensorBoard作业查看一些参数的统计信息，如loss， accuracy等。在“训练作业”界面，点击TensorBoard，再点击“创建”按钮，参数“名称”可随意填写，“日志路径”请选择步骤3中“训练输出位置”参数中的路径(s3://modelarts-example/log)。
